@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Near-black canvas with a faint cool cast */
+    --background: 222 24% 4%;
+    --foreground: 210 20% 92%;
+
+    --card: 222 20% 6%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 222 24% 5%;
+    --popover-foreground: 210 20% 92%;
+
+    --elevated: 222 18% 9%;
+
+    /* One premium blue */
+    --accent: 214 100% 62%;
+    --accent-foreground: 210 40% 98%;
+    --accent-soft: 214 90% 70%;
+
+    --primary: 210 20% 96%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 222 16% 12%;
+    --secondary-foreground: 210 20% 92%;
+
+    --muted: 222 14% 11%;
+    --muted-foreground: 216 12% 56%;
+
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 152 62% 46%;
+    --warning: 38 92% 58%;
+
+    --border: 220 14% 14%;
+    --input: 220 14% 16%;
+    --ring: 214 100% 62%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv01", "cv03", "cv04";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Consistent, subtle focus ring for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring/70 ring-offset-2 ring-offset-background;
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  /* Scrollbar — quiet and engineered */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 999px;
+    border: 3px solid hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(220 14% 22%);
+  }
+
+  html {
+    scrollbar-color: hsl(var(--border)) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+@layer components {
+  /* Section eyebrow / kicker */
+  .kicker {
+    @apply inline-flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.22em] text-muted-foreground;
+  }
+
+  /* Hairline separators that feel like schematic lines */
+  .hairline {
+    @apply border-border/70;
+  }
+
+  /* Faint blueprint grid used behind sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(
+      hsl(var(--border) / 0.9) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+
+  /* Text that reads like a metric */
+  .metric {
+    @apply font-mono tabular-nums tracking-tight;
+  }
+
+  /* Card surface with a fine top-lit edge */
+  .surface {
+    @apply rounded-xl border border-border/80 bg-card/60 backdrop-blur-sm;
+  }
+
+  .surface-hover {
+    @apply transition-colors duration-300 hover:border-border;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-br from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent;
+  }
+
+  /* Radial fade mask used to feather edges of backgrounds */
+  .mask-radial-faded {
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      #000 45%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 40%,
+      #000 45%,
+      transparent 100%
+    );
+  }
+
+  .mask-b-faded {
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Respect reduced-motion at the platform level as a safety net */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles for the résumé route */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}
