@@ -1,8 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { Fraunces } from "next/font/google";
 
 import "./globals.css";
+
+// Editorial display serif — optical sizing gives large headlines real character.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-fraunces",
+  axes: ["opsz"],
+  style: ["normal", "italic"],
+});
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { CommandMenuProvider } from "@/components/layout/command-menu";
@@ -33,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} — ${site.role}`,
     description: site.description,
-    creator: "@naitikjasani",
+    creator: `@${site.handles.twitter}`,
   },
   robots: {
     index: true,
@@ -85,7 +95,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(GeistSans.variable, GeistMono.variable)}>
+    <html
+      lang="en"
+      className={cn(GeistSans.variable, GeistMono.variable, fraunces.variable)}
+    >
       <body className="min-h-screen bg-background font-sans text-foreground">
         <script
           type="application/ld+json"

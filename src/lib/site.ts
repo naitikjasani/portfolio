@@ -12,13 +12,18 @@ export const site = {
   // Update this to your deployed domain.
   url: "https://naitikjasani.com",
   locale: "en_US",
-  email: "naitik.jasani.cn@ozi.in",
+  email: "naitik.jasani.work@gmail.com",
   location: "India",
-  // Update these handles to your own profiles.
+  // Handles — the single source of truth. Display strings are derived from these.
+  handles: {
+    github: "flicktoss",
+    linkedin: "naitikjasani",
+    twitter: "flicktoss",
+  },
   socials: {
-    github: "https://github.com/naitikjasani",
+    github: "https://github.com/flicktoss",
     linkedin: "https://www.linkedin.com/in/naitikjasani",
-    email: "mailto:naitik.jasani.cn@ozi.in",
+    email: "mailto:naitik.jasani.work@gmail.com",
   },
   resumeHref: "/resume",
   keywords: [

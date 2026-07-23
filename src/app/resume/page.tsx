@@ -38,8 +38,16 @@ export default function ResumePage() {
 
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-neutral-600">
             <ContactLink icon={Mail} href={site.socials.email} label={site.email} />
-            <ContactLink icon={Github} href={site.socials.github} label="github.com/naitikjasani" />
-            <ContactLink icon={Linkedin} href={site.socials.linkedin} label="linkedin.com/in/naitikjasani" />
+            <ContactLink
+              icon={Github}
+              href={site.socials.github}
+              label={`github.com/${site.handles.github}`}
+            />
+            <ContactLink
+              icon={Linkedin}
+              href={site.socials.linkedin}
+              label={`linkedin.com/in/${site.handles.linkedin}`}
+            />
             <ContactLink icon={Globe} href={site.url} label={site.url.replace("https://", "")} />
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="size-3.5 text-neutral-400" />

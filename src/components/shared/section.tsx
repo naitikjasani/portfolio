@@ -45,7 +45,7 @@ export function Section({
           </div>
           <h2
             id={`${id}-heading`}
-            className="mt-5 max-w-3xl text-balance text-3xl font-semibold tracking-tightest text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.1]"
+            className="mt-5 max-w-3xl text-balance font-display text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-4xl md:text-[3rem]"
           >
             {title}
           </h2>

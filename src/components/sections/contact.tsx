@@ -11,14 +11,14 @@ import { StatusDot } from "@/components/shared/status-dot";
 const methods = [
   {
     label: "GitHub",
-    handle: "@naitikjasani",
+    handle: `@${site.handles.github}`,
     href: site.socials.github,
     icon: Github,
     external: true,
   },
   {
     label: "LinkedIn",
-    handle: "in/naitikjasani",
+    handle: `in/${site.handles.linkedin}`,
     href: site.socials.linkedin,
     icon: Linkedin,
     external: true,

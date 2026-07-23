@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { StatusDot } from "@/components/shared/status-dot";
 import { GridBackground } from "@/components/backgrounds/grid-background";
 import { NetworkCanvas } from "@/components/backgrounds/network-canvas";
+import { ScribbleUnderline } from "@/components/visuals/scribble-underline";
 
 const container = {
   hidden: {},
@@ -59,11 +60,12 @@ export function Hero() {
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="mt-7 text-balance text-4xl font-semibold leading-[1.05] tracking-tightest text-foreground sm:text-6xl md:text-7xl"
+            className="mt-7 text-balance font-display text-[2.75rem] font-medium leading-[1.04] tracking-[-0.02em] text-foreground sm:text-6xl md:text-[4.75rem] md:leading-[1.02]"
           >
             Backend systems that stay{" "}
-            <span className="text-accent">fast</span>, correct, and{" "}
-            <span className="gradient-text">calm under load.</span>
+            <ScribbleUnderline className="text-accent">fast</ScribbleUnderline>,
+            correct, and <span className="italic text-foreground/90">calm</span>{" "}
+            under load.
           </motion.h1>
 
           {/* Sub */}

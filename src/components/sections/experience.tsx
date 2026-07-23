@@ -66,7 +66,7 @@ function ServiceCard({ exp }: { exp: ExperienceType }) {
       <div className="grid gap-8 p-5 sm:p-7 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
         <div>
           <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+            <h3 className="font-display text-2xl font-medium tracking-[-0.01em] text-foreground sm:text-[1.75rem]">
               {exp.company}
             </h3>
             <span className="shrink-0 font-mono text-2xs uppercase tracking-[0.16em] text-muted-foreground">

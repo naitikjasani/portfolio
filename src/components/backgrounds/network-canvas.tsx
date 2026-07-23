@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
-import { cn } from "@/lib/utils";
+import { clamp, cn, lerp } from "@/lib/utils";
 
 type Node = {
   x: number;
@@ -31,11 +31,15 @@ type NetworkCanvasProps = {
 
 const ACCENT = "94, 149, 255"; // rgb of the premium blue
 const LINE = "120, 132, 156";
+const PARALLAX = 18; // max px the field drifts toward the cursor
+const CURSOR_LINK_DIST = 170;
 
 /**
  * A quiet, self-contained network graph rendered to canvas: drifting nodes,
- * proximity edges, and occasional packets flowing along links — evoking
- * services exchanging messages. Pauses off-screen and respects reduced motion.
+ * proximity edges, packets flowing along links, and a cursor that softly
+ * "connects" to nearby nodes with a gentle parallax drift — services
+ * exchanging messages, and a system that reacts to you. Pauses off-screen
+ * and respects reduced motion.
  */
 export function NetworkCanvas({
   className,
@@ -60,6 +64,9 @@ export function NetworkCanvas({
     let raf = 0;
     let running = true;
     let lastTime = performance.now();
+
+    const mouse = { x: -9999, y: -9999, active: false };
+    const offset = { x: 0, y: 0 };
 
     const linkDistance = () => Math.min(200, Math.max(120, width / 8));
 
@@ -122,6 +129,17 @@ export function NetworkCanvas({
     const draw = (dt: number) => {
       ctx.clearRect(0, 0, width, height);
       const max = linkDistance();
+
+      // Gentle parallax toward the cursor.
+      if (!reducedMotion) {
+        const targetX = mouse.active ? clamp((mouse.x - width / 2) / width, -0.5, 0.5) : 0;
+        const targetY = mouse.active ? clamp((mouse.y - height / 2) / height, -0.5, 0.5) : 0;
+        offset.x = lerp(offset.x, targetX * PARALLAX, 0.05);
+        offset.y = lerp(offset.y, targetY * PARALLAX, 0.05);
+      }
+
+      ctx.save();
+      ctx.translate(offset.x, offset.y);
 
       if (!reducedMotion) {
         for (const n of nodes) {
@@ -190,6 +208,33 @@ export function NetworkCanvas({
           ctx.fill();
         }
       }
+
+      // cursor "connects" to the nearest nodes
+      if (mouse.active && !reducedMotion) {
+        const fx = mouse.x - offset.x;
+        const fy = mouse.y - offset.y;
+        for (const n of nodes) {
+          const d = Math.hypot(n.x - fx, n.y - fy);
+          if (d < CURSOR_LINK_DIST) {
+            const alpha = (1 - d / CURSOR_LINK_DIST) * 0.5;
+            ctx.strokeStyle = `rgba(${ACCENT}, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(fx, fy);
+            ctx.lineTo(n.x, n.y);
+            ctx.stroke();
+          }
+        }
+        const halo = ctx.createRadialGradient(fx, fy, 0, fx, fy, 10);
+        halo.addColorStop(0, `rgba(${ACCENT}, 0.55)`);
+        halo.addColorStop(1, `rgba(${ACCENT}, 0)`);
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(fx, fy, 10, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
     };
 
     const loop = (time: number) => {
@@ -211,6 +256,20 @@ export function NetworkCanvas({
     const onResize = () => build();
     window.addEventListener("resize", onResize);
 
+    const onPointerMove = (event: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      mouse.x = x;
+      mouse.y = y;
+      mouse.active = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
+    };
+    const onPointerLeave = () => {
+      mouse.active = false;
+    };
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("blur", onPointerLeave);
+
     const io = new IntersectionObserver(
       ([entry]) => {
         running = entry.isIntersecting;
@@ -227,6 +286,8 @@ export function NetworkCanvas({
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("blur", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
       io.disconnect();
     };
