@@ -60,12 +60,11 @@ export function Hero() {
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="mt-7 text-balance font-display text-[2.75rem] font-medium leading-[1.04] tracking-[-0.02em] text-foreground sm:text-6xl md:text-[4.75rem] md:leading-[1.02]"
+            className="mt-7 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-foreground sm:text-6xl md:text-[4.5rem] md:leading-[1.03]"
           >
             Backend systems that stay{" "}
             <ScribbleUnderline className="text-accent">fast</ScribbleUnderline>,
-            correct, and <span className="italic text-foreground/90">calm</span>{" "}
-            under load.
+            correct, and calm under load.
           </motion.h1>
 
           {/* Sub */}

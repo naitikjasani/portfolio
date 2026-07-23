@@ -62,7 +62,7 @@ function StageCard({ stage, index }: { stage: Stage; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={{ once: true, amount: 0.4 }}
       transition={{ delay: index * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "flex items-center gap-3 rounded-lg border px-4 py-3 transition-colors",

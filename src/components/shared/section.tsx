@@ -32,10 +32,10 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={cn("relative scroll-mt-24 py-24 sm:py-32", className)}
+      className={cn("relative scroll-mt-20 py-16 sm:py-24", className)}
     >
       <div className={cn("container", containerClassName)}>
-        <Reveal className="mb-12 sm:mb-16">
+        <Reveal className="mb-8 sm:mb-12">
           <div className="flex items-center gap-3">
             <span className="font-mono text-2xs tracking-[0.2em] text-accent">
               {index}
@@ -45,7 +45,7 @@ export function Section({
           </div>
           <h2
             id={`${id}-heading`}
-            className="mt-5 max-w-3xl text-balance font-display text-[2rem] font-medium leading-[1.08] tracking-[-0.02em] text-foreground sm:text-4xl md:text-[3rem]"
+            className="mt-5 max-w-3xl text-balance font-display text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-4xl md:text-[2.75rem]"
           >
             {title}
           </h2>

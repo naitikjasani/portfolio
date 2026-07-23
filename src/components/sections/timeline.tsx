@@ -45,7 +45,7 @@ export function Timeline() {
                 key={`${entry.org}-${entry.title}`}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.55, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 className="relative grid grid-cols-1 gap-x-8 gap-y-2 pl-8 sm:grid-cols-[8rem_1fr] sm:pl-0"
               >
@@ -76,7 +76,7 @@ export function Timeline() {
                 <div className="sm:pl-8">
                   <div className="flex items-center gap-2">
                     <Icon className="size-4 text-muted-foreground" />
-                    <h3 className="font-display text-lg font-medium text-foreground sm:text-xl">
+                    <h3 className="font-display text-base font-semibold tracking-tight text-foreground sm:text-lg">
                       {entry.title}
                     </h3>
                   </div>

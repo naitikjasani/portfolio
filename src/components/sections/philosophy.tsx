@@ -21,7 +21,7 @@ export function Philosophy() {
                 </span>
               </div>
               <div className="max-w-2xl">
-                <h3 className="font-display text-2xl font-medium tracking-[-0.01em] text-foreground sm:text-[1.75rem]">
+                <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
                   {p.title}
                 </h3>
                 <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">

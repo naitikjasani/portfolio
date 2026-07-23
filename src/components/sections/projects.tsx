@@ -58,7 +58,7 @@ function ProjectRow({ project, reversed }: { project: Project; reversed: boolean
         </div>
 
         <div>
-          <h3 className="font-display text-2xl font-medium tracking-[-0.01em] text-foreground sm:text-[2rem]">
+          <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">
             {project.name}
           </h3>
           <p className="mt-2 text-pretty text-base text-accent-soft/90">{project.tagline}</p>
