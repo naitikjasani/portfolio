@@ -9,8 +9,8 @@ export const site = {
   tagline: "Building scalable backend systems.",
   description:
     "Naitik Jasani is a backend software engineer building scalable, event-driven systems in production — Java, Spring Boot, Node.js, Kafka and Redis. Currently at OZi.",
-  // Update this to your deployed domain.
-  url: "https://naitikjasani.com",
+  // Deployed domain — drives canonical URLs, sitemap, and OG/Twitter tags.
+  url: "https://naitik-jasani.vercel.app",
   locale: "en_US",
   email: "naitik.jasani.work@gmail.com",
   location: "India",
