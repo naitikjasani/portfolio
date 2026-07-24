@@ -1,0 +1,45 @@
+---
+title: "Idempotency on the hot path"
+description: "Every write that costs money or moves state needs an idempotency key. Here's how to add one with Redis without slowing the request down."
+date: "2026-05-14"
+tags: ["Redis", "Reliability", "APIs"]
+---
+
+Retries are not an edge case. Clients time out and try again, load balancers replay requests, and users double-tap the pay button on a flaky connection. If the same request can reach your service twice, then eventually it will — and if that request charges a card or decrements inventory, "eventually" is a bug with a refund attached.
+
+The fix is boring and it works: make the operation idempotent. Give each meaningful request a client-generated key, and promise that the same key produces the same result exactly once.
+
+## The shape of it
+
+The client sends an `Idempotency-Key` header — usually a UUID it generates per user action, not per HTTP attempt. The server records the outcome against that key and returns the stored outcome on any replay.
+
+```ts
+async function withIdempotency(key: string, run: () => Promise<Result>) {
+  // SET NX: claim the key only if no one else has.
+  const claimed = await redis.set(`idem:${key}`, "pending", {
+    nx: true,
+    ex: 60 * 60 * 24, // keep the record long enough to outlive retries
+  });
+
+  if (!claimed) {
+    const existing = await redis.get(`idem:${key}`);
+    if (existing === "pending") throw new ConflictError("in flight");
+    return JSON.parse(existing) as Result; // replay: return the first result
+  }
+
+  const result = await run();
+  await redis.set(`idem:${key}`, JSON.stringify(result), { ex: 60 * 60 * 24 });
+  return result;
+}
+```
+
+`SET NX` is the whole trick. It's a single atomic operation that answers "am I the first to see this key?" without a read-then-write race. The first request wins the claim and does the work; every replay reads back the recorded result.
+
+## The parts people skip
+
+- **The in-flight window.** Between claiming the key and writing the result, a concurrent replay will see `pending`. Returning a `409` and letting the client retry is honest; pretending it succeeded is not.
+- **Scope the key.** An idempotency key means "this action," so bind it to the user and the endpoint. A key that's global is a key someone else can collide with.
+- **TTL is a real decision.** Too short and a late retry sneaks through as a fresh request. Long enough to outlive every reasonable retry — a day is a sane default.
+- **The write still needs a transaction.** Idempotency dedupes the *request*; it doesn't make the underlying database write atomic. You need both.
+
+None of this is clever. That's the point. The hot path should be made of pieces you can reason about at 3 a.m., and "the same key can't charge twice" is exactly the kind of guarantee you want to be boring.

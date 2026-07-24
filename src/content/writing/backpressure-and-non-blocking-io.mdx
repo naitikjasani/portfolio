@@ -1,0 +1,42 @@
+---
+title: "Backpressure, and the case for non-blocking I/O"
+description: "Threads are not free. A short note on what non-blocking I/O actually buys you — and the failure mode it forces you to design for."
+date: "2025-11-08"
+tags: ["Spring WebFlux", "Concurrency", "JVM"]
+---
+
+The pitch for non-blocking I/O usually gets flattened to "it's faster." It isn't, exactly. A single request on a reactive stack is often marginally *slower* than the blocking equivalent. What non-blocking I/O buys you is not speed — it's the ability to survive a slow dependency without falling over.
+
+## Where blocking breaks
+
+In a thread-per-request model, a thread that's waiting on a downstream call is doing nothing but occupying memory. That's fine until the downstream gets slow. Now each in-flight request pins a thread for the duration of the stall, the pool drains, and requests that have nothing to do with the slow dependency start queueing behind it. One sluggish service takes down the whole process. The classic name for this is head-of-line blocking, and it's why a healthy service can go dark because something two hops away had a bad minute.
+
+Non-blocking I/O breaks that coupling. A handful of event-loop threads juggle thousands of in-flight requests; a thread is only busy when there's actual work to do, not while it waits for bytes.
+
+```java
+// Nothing here holds a thread while the network is in flight.
+Mono<Quote> quote(String symbol) {
+    return webClient.get()
+        .uri("/quote/{s}", symbol)
+        .retrieve()
+        .bodyToMono(Quote.class)
+        .timeout(Duration.ofMillis(400))   // never wait forever
+        .retryWhen(Retry.backoff(2, Duration.ofMillis(50)));
+}
+```
+
+## The bill comes due as backpressure
+
+Non-blocking I/O doesn't make load disappear — it makes it *visible*. When you're no longer protected by a naturally-bounded thread pool, nothing stops you from accepting more work than you can finish. That unbounded work turns into memory pressure instead of a full pool, and memory pressure is a worse way to fail.
+
+So the reactive model forces a question the blocking model let you ignore: *what happens when the producer is faster than the consumer?* The answer has to be explicit —
+
+- bound your queues and buffers on purpose,
+- put timeouts on every external call (the example above dies at 400ms),
+- and decide what to shed when you're over capacity, rather than letting the heap decide for you.
+
+## When it's worth it
+
+Non-blocking I/O earns its complexity when a service is mostly waiting on other services — an API gateway, an aggregator, anything fan-out heavy. If your service is CPU-bound or its dependencies are fast and local, the blocking model is simpler and you should keep it.
+
+The mental shift is the real deliverable: you stop thinking about threads and start thinking about flow — how much work is in the system, how fast it drains, and what you do when those two numbers stop matching. That's a better thing to be thinking about anyway.

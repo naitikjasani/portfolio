@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 import { site } from "@/lib/site";
@@ -25,6 +26,22 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             © {year} {site.name}. Designed &amp; engineered from first principles.
           </p>
+          <nav className="flex items-center gap-4 pt-1 text-sm">
+            <Link
+              href="/writing"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Writing
+            </Link>
+            <a
+              href={site.resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Résumé
+            </a>
+          </nav>
         </div>
 
         <div className="flex items-center gap-2">

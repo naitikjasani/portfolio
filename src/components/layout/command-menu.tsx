@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
   FileText,
@@ -8,6 +9,7 @@ import {
   Home,
   Linkedin,
   Mail,
+  PenLine,
   Send,
 } from "lucide-react";
 
@@ -38,6 +40,7 @@ export function useCommandMenu() {
 
 export function CommandMenuProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -50,11 +53,27 @@ export function CommandMenuProvider({ children }: { children: React.ReactNode })
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  const scrollTo = useCallback((id: string) => {
-    setOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+  const scrollTo = useCallback(
+    (id: string) => {
+      setOpen(false);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // Not on the home page — route to the section anchor instead.
+        router.push(id === "top" ? "/" : `/#${id}`);
+      }
+    },
+    [router],
+  );
+
+  const goRoute = useCallback(
+    (href: string) => {
+      setOpen(false);
+      router.push(href);
+    },
+    [router],
+  );
 
   const openExternal = useCallback((href: string) => {
     setOpen(false);
@@ -94,6 +113,10 @@ export function CommandMenuProvider({ children }: { children: React.ReactNode })
                 <span>{item.label}</span>
               </CommandItem>
             ))}
+            <CommandItem value="writing blog notes articles" onSelect={() => goRoute("/writing")}>
+              <PenLine />
+              <span>Writing</span>
+            </CommandItem>
           </CommandGroup>
 
           <CommandGroup heading="Links">

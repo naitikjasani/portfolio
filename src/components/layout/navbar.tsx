@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Command, Menu, X } from "lucide-react";
 
@@ -92,6 +93,12 @@ export function Navbar() {
                 </button>
               );
             })}
+            <Link
+              href="/writing"
+              className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Writing
+            </Link>
           </div>
 
           {/* Actions */}
@@ -148,6 +155,14 @@ export function Navbar() {
                   <span className="font-mono text-2xs text-accent">{item.index}</span>
                 </button>
               ))}
+              <Link
+                href="/writing"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between rounded-lg px-3 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-secondary/40 hover:text-foreground"
+              >
+                <span>Writing</span>
+                <span className="font-mono text-2xs text-accent">→</span>
+              </Link>
               <Button asChild variant="accent" className="mt-2">
                 <a href={site.resumeHref} target="_blank" rel="noopener noreferrer">
                   Résumé

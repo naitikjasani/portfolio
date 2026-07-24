@@ -21,7 +21,7 @@ export function ScribbleUnderline({
   const reduced = usePrefersReducedMotion();
 
   return (
-    <span className={cn("relative inline-block", className)}>
+    <span className={cn("relative inline", className)}>
       {children}
       <svg
         aria-hidden

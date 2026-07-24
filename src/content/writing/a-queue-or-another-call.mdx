@@ -1,0 +1,38 @@
+---
+title: "A queue, or another call?"
+description: "A simple test for when to make work asynchronous — and when a synchronous call is still the right, boring choice."
+date: "2026-02-20"
+tags: ["Kafka", "Architecture", "Event-Driven"]
+---
+
+Event-driven architecture is easy to over-apply. Once you have a broker, every interaction starts to look like it wants to be a topic. But a queue is not free — it trades a call you can debug in one stack trace for a flow you have to reconstruct from three services and a consumer lag graph. Sometimes that trade is obviously worth it. Often it isn't.
+
+Here's the test I actually use.
+
+## Does the caller need the result to continue?
+
+If the caller cannot make its next decision without the answer, the work is synchronous. Reserving stock before you confirm an order, checking a balance before you authorize a payment — the caller is blocked on the truth, so make the call, handle the timeout, and move on. Wrapping that in a queue just adds a place for the answer to get lost.
+
+If the caller only needs the work to *happen eventually* — send the receipt, update the search index, warm a cache, notify downstream — that's an event. Publish it and return. The caller's latency shouldn't depend on how slow the slowest consumer is today.
+
+```
+confirmOrder(cmd):
+  reserveStock(cmd)        # synchronous: we can't proceed without it
+  order = persist(cmd)     # synchronous: this is the source of truth
+  emit("order.confirmed")  # async: receipts, analytics, fulfilment
+  return order
+```
+
+That single `emit` is where the leverage is. Everything that used to be a slow, coupled step inside `confirmOrder` becomes an independent consumer that can fail, retry, and scale on its own schedule.
+
+## What going async actually costs
+
+Making work asynchronous doesn't remove complexity — it moves it. In exchange for decoupling, you now own:
+
+- **Ordering.** Events for one entity usually need to be processed in order. Partition by the entity's id (order id, user id) and let the broker keep per-key order for you.
+- **Duplicates.** At-least-once delivery means every consumer must be idempotent. If you can't replay an event safely, you don't have an event — you have a landmine.
+- **Visibility.** A synchronous failure throws. An async failure sits in a consumer, quietly retrying, until someone reads the dashboard. You have to build the dashboard.
+
+## The rule
+
+Reach for a queue when the work is a *consequence*, not a *precondition*. Keep the call synchronous when the caller is genuinely waiting on the answer. The goal was never "async everything" — it was to stop making users wait for work that was never on their critical path.
