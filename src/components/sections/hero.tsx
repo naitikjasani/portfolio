@@ -63,7 +63,9 @@ export function Hero() {
             className="mt-7 text-balance font-display text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-foreground sm:text-6xl md:text-[4.5rem] md:leading-[1.03]"
           >
             Backend systems that stay{" "}
-            <ScribbleUnderline className="text-accent">fast</ScribbleUnderline>,
+            <span className="whitespace-nowrap">
+              <ScribbleUnderline className="text-accent">fast</ScribbleUnderline>,
+            </span>{" "}
             correct, and calm under load.
           </motion.h1>
 
