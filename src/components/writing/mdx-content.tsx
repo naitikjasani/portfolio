@@ -6,12 +6,7 @@ import type {
 } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pretty-code";
-
-const prettyCodeOptions: PrettyCodeOptions = {
-  theme: "github-dark-default",
-  keepBackground: false,
-};
+import { highlight } from "sugar-high";
 
 const components = {
   h2: (props: HTMLAttributes<HTMLHeadingElement>) => (
@@ -70,41 +65,53 @@ const components = {
     />
   ),
   hr: () => <hr className="my-10 border-border" />,
-  code: (props: HTMLAttributes<HTMLElement>) => (
-    <code
-      className="rounded bg-secondary/70 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground"
-      {...props}
-    />
-  ),
-  figure: (props: HTMLAttributes<HTMLElement>) => (
-    <figure
-      className="my-6 overflow-hidden rounded-xl border border-border"
-      {...props}
-    />
-  ),
+  code: ({
+    className,
+    children,
+    ...props
+  }: HTMLAttributes<HTMLElement> & { children?: React.ReactNode }) => {
+    // Fenced code blocks carry a `language-*` class — highlight them.
+    if (
+      typeof className === "string" &&
+      className.startsWith("language-") &&
+      typeof children === "string"
+    ) {
+      return (
+        <code
+          className="sugar-high"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: highlight(children.replace(/\n$/, "")) }}
+        />
+      );
+    }
+    // Inline code.
+    return (
+      <code
+        className="rounded bg-secondary/70 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground"
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  },
   pre: (props: HTMLAttributes<HTMLPreElement>) => (
     <pre
-      className="overflow-x-auto bg-[#0b0d12] p-4 font-mono text-[0.85rem] leading-relaxed [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-inherit"
+      className="my-6 overflow-x-auto rounded-xl border border-border bg-[#0b0d12] p-4 font-mono text-[0.85rem] leading-relaxed"
       {...props}
     />
   ),
 };
 
 /**
- * Renders a post's MDX source with the site's typography and build-time
- * syntax highlighting (via rehype-pretty-code / shiki).
+ * Renders a post's MDX source with the site's typography and lightweight,
+ * build-time syntax highlighting (sugar-high — ~1KB, no runtime dependency).
  */
 export function MdxContent({ source }: { source: string }) {
   return (
     <MDXRemote
       source={source}
       components={components}
-      options={{
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-          rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
-        },
-      }}
+      options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
     />
   );
 }

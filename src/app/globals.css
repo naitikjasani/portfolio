@@ -194,6 +194,23 @@
   }
 }
 
+/* sugar-high syntax highlighting tokens (dark) */
+:root {
+  --sh-class: #ffa657;
+  --sh-identifier: #c9d1d9;
+  --sh-sign: #8b949e;
+  --sh-property: #79c0ff;
+  --sh-entity: #d2a8ff;
+  --sh-jsxliterals: #79c0ff;
+  --sh-string: #a5d6ff;
+  --sh-keyword: #ff7b72;
+  --sh-comment: #8b949e;
+}
+
+pre code.sugar-high {
+  color: #c9d1d9;
+}
+
 @keyframes glow-drift {
   0%,
   100% {

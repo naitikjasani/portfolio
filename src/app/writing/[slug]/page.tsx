@@ -10,6 +10,9 @@ import { MdxContent } from "@/components/writing/mdx-content";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
+// Fully static: only prebuilt posts are served, no runtime function needed.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
 }
