@@ -1,6 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Github, Globe, Linkedin, Mail, MapPin } from "lucide-react";
+import {
+  ArrowLeft,
+  Boxes,
+  Code2,
+  Github,
+  Globe,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Swords,
+} from "lucide-react";
 
 import { site } from "@/lib/site";
 import { about, experiences, projects, techGroups, timeline } from "@/lib/data";
@@ -38,6 +49,10 @@ export default function ResumePage() {
 
           <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-neutral-600">
             <ContactLink icon={Mail} href={site.socials.email} label={site.email} />
+            <a href={site.phoneHref} className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-neutral-900">
+              <Phone className="size-3.5 text-neutral-400" />
+              {site.phone}
+            </a>
             <ContactLink
               icon={Github}
               href={site.socials.github}
@@ -47,6 +62,21 @@ export default function ResumePage() {
               icon={Linkedin}
               href={site.socials.linkedin}
               label={`linkedin.com/in/${site.handles.linkedin}`}
+            />
+            <ContactLink
+              icon={Code2}
+              href={site.profiles.leetcode}
+              label={`leetcode.com/u/${site.handles.leetcode}`}
+            />
+            <ContactLink
+              icon={Swords}
+              href={site.profiles.codeforces}
+              label={`codeforces.com/profile/${site.handles.codeforces}`}
+            />
+            <ContactLink
+              icon={Boxes}
+              href={site.profiles.codolio}
+              label={`codolio.com/profile/${site.handles.codolio}`}
             />
             <ContactLink icon={Globe} href={site.url} label={site.url.replace("https://", "")} />
             <span className="inline-flex items-center gap-1.5">

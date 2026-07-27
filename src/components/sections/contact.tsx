@@ -1,7 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Check, Copy, FileText, Github, Linkedin, Mail } from "lucide-react";
+import {
+  ArrowUpRight,
+  Boxes,
+  Check,
+  Code2,
+  Copy,
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  Swords,
+} from "lucide-react";
 
 import { site } from "@/lib/site";
 import { Section } from "@/components/shared/section";
@@ -21,6 +32,27 @@ const methods = [
     handle: `in/${site.handles.linkedin}`,
     href: site.socials.linkedin,
     icon: Linkedin,
+    external: true,
+  },
+  {
+    label: "LeetCode",
+    handle: `@${site.handles.leetcode}`,
+    href: site.profiles.leetcode,
+    icon: Code2,
+    external: true,
+  },
+  {
+    label: "Codeforces",
+    handle: `@${site.handles.codeforces}`,
+    href: site.profiles.codeforces,
+    icon: Swords,
+    external: true,
+  },
+  {
+    label: "Codolio",
+    handle: "All coding stats",
+    href: site.profiles.codolio,
+    icon: Boxes,
     external: true,
   },
   {
@@ -110,7 +142,7 @@ export function Contact() {
         </Reveal>
 
         {/* Method cards */}
-        <Reveal delay={0.1} className="grid gap-3">
+        <Reveal delay={0.1} className="grid gap-3 sm:grid-cols-2">
           {methods.map(({ label, handle, href, icon: Icon, external }) => (
             <a
               key={label}

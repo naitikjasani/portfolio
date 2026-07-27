@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Boxes, Code2, Github, Linkedin, Mail, Swords } from "lucide-react";
 
 import { site } from "@/lib/site";
 import { StatusDot } from "@/components/shared/status-dot";
@@ -7,6 +7,9 @@ import { StatusDot } from "@/components/shared/status-dot";
 const links = [
   { label: "GitHub", href: site.socials.github, icon: Github, external: true },
   { label: "LinkedIn", href: site.socials.linkedin, icon: Linkedin, external: true },
+  { label: "LeetCode", href: site.profiles.leetcode, icon: Code2, external: true },
+  { label: "Codeforces", href: site.profiles.codeforces, icon: Swords, external: true },
+  { label: "Codolio", href: site.profiles.codolio, icon: Boxes, external: true },
   { label: "Email", href: site.socials.email, icon: Mail, external: false },
 ];
 
