@@ -1,7 +1,6 @@
 import { ArrowUpRight, Check } from "lucide-react";
 
 import { projects, type Project } from "@/lib/data";
-import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/shared/reveal";
@@ -83,15 +82,28 @@ function ProjectRow({ project, reversed }: { project: Project; reversed: boolean
           ))}
         </div>
 
-        <a
-          href={site.socials.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 pt-2 text-sm font-medium text-foreground transition-colors hover:text-accent"
-        >
-          View source
-          <ArrowUpRight className="size-4" />
-        </a>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2">
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-accent"
+          >
+            View source
+            <ArrowUpRight className="size-4" />
+          </a>
+          {project.demo ? (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-accent"
+            >
+              Live demo
+              <ArrowUpRight className="size-4" />
+            </a>
+          ) : null}
+        </div>
       </Reveal>
     </article>
   );
