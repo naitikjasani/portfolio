@@ -2,9 +2,9 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Briefcase, GraduationCap } from "lucide-react";
+import { Briefcase, GraduationCap, Users } from "lucide-react";
 
-import { timeline } from "@/lib/data";
+import { leadership, timeline } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Section } from "@/components/shared/section";
 
@@ -89,6 +89,21 @@ export function Timeline() {
             );
           })}
         </ol>
+      </div>
+
+      <div className="mt-14 border-t border-border/60 pt-8 sm:pl-[calc(8rem+2rem)]">
+        <div className="flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.18em] text-muted-foreground">
+          <Users className="size-3.5" />
+          Leadership & activities
+        </div>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+          {leadership.map((l) => (
+            <li key={l.org} className="surface px-4 py-3">
+              <div className="text-sm font-medium text-foreground">{l.org}</div>
+              <div className="mt-0.5 font-mono text-2xs tracking-wide text-accent">{l.role}</div>
+            </li>
+          ))}
+        </ul>
       </div>
     </Section>
   );

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, Lock } from "lucide-react";
 
 import { projects, type Project } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -6,7 +6,7 @@ import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/shared/reveal";
 import { TechPill } from "@/components/shared/tech-pill";
 import { BleVisual } from "@/components/visuals/ble-visual";
-import { ArchitectureVisual } from "@/components/visuals/architecture-visual";
+import { SyncVisual } from "@/components/visuals/sync-visual";
 
 export function Projects() {
   return (
@@ -37,10 +37,10 @@ function ProjectRow({ project, reversed }: { project: Project; reversed: boolean
         <div className="surface relative overflow-hidden p-4 sm:p-6">
           <div className="absolute inset-0 bg-dots opacity-[0.35]" aria-hidden />
           <div className="pointer-events-none absolute right-4 top-4 font-mono text-2xs tracking-wide text-muted-foreground/60">
-            {project.visual === "ble" ? "signal.map" : "request.flow"}
+            {project.visual === "ble" ? "signal.map" : "write.path"}
           </div>
           <div className="relative">
-            {project.visual === "ble" ? <BleVisual /> : <ArchitectureVisual />}
+            {project.visual === "ble" ? <BleVisual /> : <SyncVisual />}
           </div>
         </div>
       </Reveal>
@@ -83,26 +83,36 @@ function ProjectRow({ project, reversed }: { project: Project; reversed: boolean
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2">
-          <a
-            href={project.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-accent"
-          >
-            View source
-            <ArrowUpRight className="size-4" />
-          </a>
           {project.demo ? (
             <a
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-accent"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-accent"
             >
-              Live demo
+              Live site
               <ArrowUpRight className="size-4" />
             </a>
           ) : null}
+          {project.repo ? (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                "inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-accent",
+                project.demo ? "text-muted-foreground" : "text-foreground",
+              )}
+            >
+              View source
+              <ArrowUpRight className="size-4" />
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Lock className="size-3.5" />
+              Private repository
+            </span>
+          )}
         </div>
       </Reveal>
     </article>
