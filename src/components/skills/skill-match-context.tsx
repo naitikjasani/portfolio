@@ -8,7 +8,6 @@ type SkillMatchValue = {
   results: MatchResult[];
   /** Canonical skills currently selected — drives page-wide pill highlights. */
   selected: Set<string>;
-  isSelected: (term: string) => boolean;
   toggle: (term: string) => void;
   addMany: (terms: string[]) => void;
   clear: () => void;
@@ -46,11 +45,9 @@ export function SkillMatchProvider({ children }: { children: React.ReactNode }) 
 
   const value = useMemo<SkillMatchValue>(() => {
     const selected = new Set(results.flatMap((r) => (r.skill ? [r.skill] : [])));
-    const keys = new Set(results.map(keyOf));
     return {
       results,
       selected,
-      isSelected: (term) => keys.has(keyOf(matchTerm(term))),
       toggle,
       addMany,
       clear,

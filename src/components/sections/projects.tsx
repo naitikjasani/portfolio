@@ -1,53 +1,51 @@
-import Image from "next/image";
-import { ArrowUpRight, Check, Lock, MousePointerClick } from "lucide-react";
+import { ArrowUpRight, Lock } from "lucide-react";
 
 import { projects, type Project } from "@/lib/data";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/shared/reveal";
-import { TechPill } from "@/components/shared/tech-pill";
-import { BleVisual } from "@/components/visuals/ble-visual";
+import { StackLine } from "@/components/shared/tech-pill";
 import { OfflineSyncDemo } from "@/components/visuals/offline-sync-demo";
 
 export function Projects() {
   const [featured, ...rest] = projects;
 
   return (
-    <Section id="projects" index="02" kicker="Projects" title="Things I've built end to end.">
-      <div className="space-y-8">
+    <Section id="projects" title="Projects">
+      <div className="space-y-6">
         <FeaturedProject project={featured} />
         {rest.map((project) => (
-          <CompactProject key={project.slug} project={project} />
+          <Reveal key={project.slug}>
+            <CompactProject project={project} />
+          </Reveal>
         ))}
       </div>
     </Section>
   );
 }
 
-function ProjectMeta({ project }: { project: Project }) {
+function Meta({ project }: { project: Project }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-2xs uppercase tracking-[0.16em] text-muted-foreground">
-      <span className="text-accent">{project.category}</span>
-      <span className="hidden h-px w-6 bg-border sm:block" aria-hidden />
-      <span>{project.year}</span>
-    </div>
+    <p className="text-sm text-muted-foreground">
+      {project.category} · {project.year}
+    </p>
   );
 }
 
-function ProjectLinks({ project }: { project: Project }) {
+function Links({ project }: { project: Project }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
       {project.repo ? (
         <a
           href={project.repo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-accent"
+          className="inline-flex items-center gap-1 font-medium text-foreground transition-colors hover:text-accent"
         >
-          View source
+          Source
           <ArrowUpRight className="size-4" />
         </a>
       ) : (
-        <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+        <span className="inline-flex items-center gap-1.5 text-muted-foreground">
           <Lock className="size-3.5" />
           Private repository
         </span>
@@ -57,7 +55,7 @@ function ProjectLinks({ project }: { project: Project }) {
           href={project.demo}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-accent"
+          className="inline-flex items-center gap-1 text-muted-foreground transition-colors hover:text-accent"
         >
           Open app{project.demoNote ? ` (${project.demoNote})` : ""}
           <ArrowUpRight className="size-3.5" />
@@ -67,124 +65,101 @@ function ProjectLinks({ project }: { project: Project }) {
   );
 }
 
-function FeaturedProject({ project }: { project: Project }) {
+function Highlights({ items }: { items: string[] }) {
+  const Item = ({ text, className = "" }: { text: string; className?: string }) => (
+    <li className={`relative pl-4 text-base leading-relaxed text-muted-foreground ${className}`}>
+      <span className="absolute left-0 top-[0.7em] size-1.5 rounded-full bg-accent/70" aria-hidden />
+      {text}
+    </li>
+  );
+  const [first, rest] = [items.slice(0, 2), items.slice(2)];
+
   return (
-    <article className="surface overflow-hidden">
-      <div className="grid lg:grid-cols-[1fr_1.05fr]">
-        {/* Story */}
-        <Reveal className="space-y-5 p-5 sm:p-8">
-          <ProjectMeta project={project} />
-          <div>
-            <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">
-              {project.name}
-            </h3>
-            <p className="mt-2 text-pretty text-base text-accent-soft/90">{project.tagline}</p>
-          </div>
-          <p className="text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {project.description}
-          </p>
-
-          {project.stats ? (
-            <dl className="grid grid-cols-4 gap-px overflow-hidden rounded-lg border border-border/80 bg-border/60">
-              {project.stats.map((s) => (
-                <div key={s.label} className="flex flex-col-reverse bg-card/80 px-3 py-2.5">
-                  <dt className="text-2xs text-muted-foreground">{s.label}</dt>
-                  <dd className="metric text-lg font-semibold text-foreground">{s.value}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
-
-          <ul className="grid gap-2.5">
-            {project.highlights.map((h) => (
-              <li key={h} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                <Check className="mt-0.5 size-4 shrink-0 text-accent" />
-                <span>{h}</span>
-              </li>
+    <div>
+      <ul className="space-y-2">
+        {first.map((h) => (
+          <Item key={h} text={h} />
+        ))}
+        {/* Desktop shows everything; phones keep the rest one tap away. */}
+        {rest.map((h) => (
+          <Item key={h} text={h} className="hidden sm:block" />
+        ))}
+      </ul>
+      {rest.length ? (
+        <details className="group mt-2 sm:hidden">
+          <summary className="cursor-pointer list-none text-sm text-muted-foreground [&::-webkit-details-marker]:hidden">
+            <span className="group-open:hidden">{rest.length} more</span>
+            <span className="hidden group-open:inline">Show less</span>
+          </summary>
+          <ul className="mt-2 space-y-2">
+            {rest.map((h) => (
+              <Item key={h} text={h} />
             ))}
           </ul>
+        </details>
+      ) : null}
+    </div>
+  );
+}
 
-          <div className="flex flex-wrap gap-1.5">
-            {project.stack.map((tech) => (
-              <TechPill key={tech}>{tech}</TechPill>
-            ))}
+function FeaturedProject({ project }: { project: Project }) {
+  return (
+    <article className="overflow-hidden rounded-xl border border-border/80 bg-card/40">
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        <Reveal className="space-y-5 p-6 sm:p-8">
+          <div>
+            <Meta project={project} />
+            <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-foreground">
+              {project.name}
+            </h3>
+            <p className="mt-1 text-base text-foreground/85">{project.tagline}</p>
           </div>
-          <ProjectLinks project={project} />
+
+          <p className="text-base leading-relaxed text-muted-foreground">{project.description}</p>
+
+          {project.stats ? (
+            <p className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
+              {project.stats.map((s) => (
+                <span key={s.label}>
+                  <span className="metric text-base font-semibold text-foreground">{s.value}</span>{" "}
+                  {s.label}
+                </span>
+              ))}
+            </p>
+          ) : null}
+
+          <Highlights items={project.highlights} />
+          <StackLine items={project.stack} />
+          <Links project={project} />
         </Reveal>
 
-        {/* Interactive demo */}
-        <div className="relative border-t border-border/70 bg-elevated/30 p-5 sm:p-8 lg:border-l lg:border-t-0">
-          <div className="absolute inset-0 bg-dots opacity-[0.3]" aria-hidden />
-          <div className="relative">
-            <div className="flex items-center gap-2 font-mono text-2xs uppercase tracking-[0.16em] text-accent">
-              <MousePointerClick className="size-3.5" />
-              Try it · the write path
-            </div>
-            <OfflineSyncDemo />
-          </div>
+        <div className="border-t border-border/70 p-6 sm:p-8 lg:border-l lg:border-t-0">
+          <p className="text-sm font-medium text-foreground">Try it: the write path</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Go offline, log a few workouts, reconnect — then retry a request.
+          </p>
+          <OfflineSyncDemo />
         </div>
       </div>
-
-      {project.screenshots?.length ? (
-        <div className="border-t border-border/70 p-5 sm:p-8">
-          <div className="-mx-1 flex snap-x gap-4 overflow-x-auto px-1 pb-2">
-            {project.screenshots.map((shot) => (
-              <a
-                key={shot.src}
-                href={shot.src}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 snap-start overflow-hidden rounded-lg border border-border/80 transition-colors hover:border-accent/50"
-              >
-                <Image
-                  src={shot.src}
-                  alt={shot.alt}
-                  width={shot.width}
-                  height={shot.height}
-                  className="h-56 w-auto sm:h-72"
-                />
-              </a>
-            ))}
-          </div>
-        </div>
-      ) : null}
     </article>
   );
 }
 
 function CompactProject({ project }: { project: Project }) {
   return (
-    <Reveal>
-      <article className="surface grid items-center gap-6 overflow-hidden p-5 sm:grid-cols-[1fr_15rem] sm:p-8 lg:grid-cols-[1fr_18rem]">
-        <div className="space-y-4">
-          <ProjectMeta project={project} />
-          <div>
-            <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
-              {project.name}
-            </h3>
-            <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {project.description}
-            </p>
-          </div>
-          <ul className="grid gap-2">
-            {project.highlights.map((h) => (
-              <li key={h} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                <Check className="mt-0.5 size-4 shrink-0 text-accent" />
-                <span>{h}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="flex flex-wrap gap-1.5">
-            {project.stack.map((tech) => (
-              <TechPill key={tech}>{tech}</TechPill>
-            ))}
-          </div>
-          <ProjectLinks project={project} />
-        </div>
-        <div className="mx-auto hidden w-full max-w-[18rem] sm:block">
-          <BleVisual />
-        </div>
-      </article>
-    </Reveal>
+    <article className="space-y-4 rounded-xl border border-border/80 p-6 sm:p-8">
+      <div>
+        <Meta project={project} />
+        <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-foreground">
+          {project.name}
+        </h3>
+      </div>
+      <p className="max-w-3xl text-base leading-relaxed text-muted-foreground">
+        {project.description}
+      </p>
+      <Highlights items={project.highlights} />
+      <StackLine items={project.stack} />
+      <Links project={project} />
+    </article>
   );
 }

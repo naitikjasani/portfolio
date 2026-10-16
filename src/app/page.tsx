@@ -1,8 +1,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MobileCta } from "@/components/layout/mobile-cta";
-import { ScrollProgress } from "@/components/layout/scroll-progress";
-import { GrainOverlay } from "@/components/backgrounds/grain-overlay";
 import { SkillMatchProvider } from "@/components/skills/skill-match-context";
 import { Hero } from "@/components/sections/hero";
 import { Experience } from "@/components/sections/experience";
@@ -15,8 +13,6 @@ import { Contact } from "@/components/sections/contact";
 export default function HomePage() {
   return (
     <SkillMatchProvider>
-      <ScrollProgress />
-      <GrainOverlay />
       <Navbar />
       <main id="main">
         <Hero />

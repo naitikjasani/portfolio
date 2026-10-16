@@ -47,8 +47,6 @@ export const about = {
 /* ------------------------------------------------------------------ */
 
 export type Achievement = {
-  /** Only real numbers — omitted when the bullet has no figure to lead with. */
-  metric?: string;
   label: string;
   detail: string;
   /** Primary bullets show by default; the rest sit behind "Show more". */
@@ -60,7 +58,6 @@ export type Experience = {
   company: string;
   role: string;
   period: string;
-  status: "RUNNING" | "STABLE";
   region: string;
   summary: string;
   stack: string[];
@@ -74,7 +71,6 @@ export const experiences: Experience[] = [
     company: "OZi",
     role: "Backend Developer",
     period: "May 2026 – Present",
-    status: "RUNNING",
     region: "Quick Commerce",
     summary:
       "The order service behind a quick-commerce platform — placement, live tracking, returns and admin operations.",
@@ -87,14 +83,12 @@ export const experiences: Experience[] = [
         primary: true,
       },
       {
-        metric: "26 sources",
         label: "Observability platform",
         detail:
           "Built error grouping, latency percentiles, SLOs, error budgets, Slack alerts and a unified order timeline across 26 data sources.",
         primary: true,
       },
       {
-        metric: "180+ tests",
         label: "Return pickup capacity",
         detail:
           "Designed return and exchange pickup capacity end to end — MySQL schema, IST-aware engine, CX overrides and admin UI — verified with 180+ tests.",
@@ -117,7 +111,6 @@ export const experiences: Experience[] = [
     company: "Bajaj Finserv Health",
     role: "Software Engineer Intern – Backend",
     period: "Jul – Oct 2025",
-    status: "STABLE",
     region: "Healthcare",
     summary:
       "Spring Boot microservices for the Universal Provider Portal — hospital-payer integrations across 50+ partner hospitals.",
@@ -126,34 +119,29 @@ export const experiences: Experience[] = [
       "https://drive.google.com/file/d/1mw6YdjtR87CbEjollTi1pjNv_WN14vHa/view?usp=sharing",
     achievements: [
       {
-        metric: "3–4×",
         label: "Throughput under load",
         detail:
           "Raised backend throughput to 300+ requests/second under concurrent load — a 3–4× improvement over the legacy implementation.",
         primary: true,
       },
       {
-        metric: "100K+/day",
         label: "Provider portal at 99.9% uptime",
         detail:
           "Spring Boot microservices for the Universal Provider Portal (UPP), serving 50+ partner hospitals and 100K+ daily transactions at 99.9% uptime.",
         primary: true,
       },
       {
-        metric: "−40% MTTR",
         label: "ELK observability",
         detail:
           "Centralized structured logs and real-time Kibana dashboards on the ELK Stack, cutting mean time to resolution for production incidents by 40%.",
         primary: true,
       },
       {
-        metric: "−30–35%",
         label: "API latency",
         detail:
           "Paired PostgreSQL with a Redis caching layer for hot data to cut critical API response times by 30–35%.",
       },
       {
-        metric: "−50%",
         label: "Manual deployment effort",
         detail:
           "Automated ArgoCD-driven CI/CD deployments, halving manual deployment effort and enabling zero-downtime releases.",
@@ -177,14 +165,11 @@ export type Project = {
   stack: string[];
   /** Headline numbers shown as chips on the case study. */
   stats?: { value: string; label: string }[];
-  /** Images under /public; the strip renders only when present. */
-  screenshots?: { src: string; alt: string; width: number; height: number }[];
   /** Omitted for private repositories. */
   repo?: string;
   demo?: string;
   /** Shown beside the demo link when it needs context (e.g. sign-in wall). */
   demoNote?: string;
-  visual: "ble" | "sync";
 };
 
 export const projects: Project[] = [
@@ -211,7 +196,6 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Next.js", "PostgreSQL", "Supabase", "Drizzle", "Turborepo", "Vitest"],
     demo: "https://ekayu.vercel.app/",
     demoNote: "sign-in required",
-    visual: "sync",
   },
   {
     slug: "proximity-ad-delivery",
@@ -226,8 +210,7 @@ export const projects: Project[] = [
       "Proximity-targeted, Gemini-generated ads drove 35–40% higher engagement",
     ],
     stack: ["Node.js", "Express.js", "Python", "Raspberry Pi", "BLE", "Gemini API", "MongoDB"],
-    repo: "https://github.com/naitikjasani/CTIOT-Smart-Advertising",
-    visual: "ble",
+    // Repo stays private until its committed .env (Gemini key) is scrubbed from history.
   },
 ];
 
@@ -327,26 +310,6 @@ export const techGroups: TechGroup[] = [
       { name: "DSA", note: "1000+ problems on LeetCode & Codeforces", aliases: ["data structures", "algorithms"] },
     ],
   },
-];
-
-/** Quick-pick chips for Stack Match — common terms from backend job descriptions. */
-export const stackMatchPresets = [
-  "Java",
-  "Spring Boot",
-  "Node.js",
-  "TypeScript",
-  "Python",
-  "Microservices",
-  "AWS",
-  "Kafka",
-  "SQS",
-  "PostgreSQL",
-  "MySQL",
-  "MongoDB",
-  "Redis",
-  "Docker",
-  "System Design",
-  "React",
 ];
 
 /**

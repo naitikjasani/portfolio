@@ -8,7 +8,7 @@ export default function NotFound() {
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
       <GridBackground />
       <div className="relative">
-        <p className="font-mono text-2xs uppercase tracking-[0.28em] text-accent">
+        <p className="text-sm font-medium text-accent">
           HTTP 404
         </p>
         <h1 className="mt-4 font-display text-7xl font-semibold tracking-[-0.03em] text-foreground sm:text-8xl">

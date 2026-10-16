@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  * Returns the id of the section closest to the top of the viewport.
  */
 export function useScrollSpy(ids: string[], offset = 0) {
-  const [activeId, setActiveId] = useState<string | null>(ids[0] ?? null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || ids.length === 0) return;
@@ -35,7 +35,8 @@ export function useScrollSpy(ids: string[], offset = 0) {
           }
         });
 
-        if (best && bestRatio > 0) setActiveId(best);
+        // Nothing highlighted while the hero (or an unlisted section) is in view.
+        setActiveId(bestRatio > 0 ? best : null);
       },
       {
         rootMargin: `-${offset}px 0px -55% 0px`,

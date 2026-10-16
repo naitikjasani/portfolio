@@ -70,14 +70,14 @@ export default async function PostPage({ params }: PageProps) {
 
       <Link
         href="/writing"
-        className="inline-flex items-center gap-1.5 font-mono text-2xs uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground"
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-3.5" />
         Writing
       </Link>
 
       <header className="mt-8">
-        <div className="flex items-center gap-3 font-mono text-2xs uppercase tracking-[0.16em] text-muted-foreground">
+        <div className="flex items-center gap-3 text-sm text-muted-foreground">
           <time dateTime={meta.date}>{formatPostDate(meta.date)}</time>
           <span className="h-px w-4 bg-border" aria-hidden />
           <span>{meta.readingTime} min read</span>

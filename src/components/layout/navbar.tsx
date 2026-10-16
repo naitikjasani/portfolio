@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { navItems } from "@/lib/data";
 import { site } from "@/lib/site";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
-import { StatusDot } from "@/components/shared/status-dot";
 import { Button } from "@/components/ui/button";
 
 const sectionIds = navItems.map((item) => item.id);
@@ -50,18 +49,10 @@ export function Navbar() {
             }}
             className="group flex items-center gap-3"
           >
-            <span className="relative grid size-9 place-items-center rounded-lg border border-border bg-card font-mono text-sm font-semibold tracking-tight text-foreground">
+            <span className="grid size-9 place-items-center rounded-lg border border-border bg-card text-sm font-semibold tracking-tight text-foreground">
               NJ
-              <span className="absolute -right-1 -top-1">
-                <StatusDot />
-              </span>
             </span>
-            <span className="hidden flex-col leading-tight sm:flex">
-              <span className="text-sm font-medium text-foreground">{site.name}</span>
-              <span className="font-mono text-2xs tracking-wide text-muted-foreground">
-                {site.role}
-              </span>
-            </span>
+            <span className="hidden text-sm font-medium text-foreground sm:inline">{site.name}</span>
           </a>
 
           {/* Desktop nav */}

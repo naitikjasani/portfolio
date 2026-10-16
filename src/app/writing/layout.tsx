@@ -14,13 +14,13 @@ export default function WritingLayout({
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/70 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between gap-4">
           <Link href="/" className="group flex items-center gap-3">
-            <span className="relative grid size-9 place-items-center rounded-lg border border-border bg-card font-mono text-sm font-semibold text-foreground">
+            <span className="relative grid size-9 place-items-center rounded-lg border border-border bg-card text-sm font-semibold text-foreground">
               NJ
               <span className="absolute -right-1 -top-1">
                 <StatusDot />
               </span>
             </span>
-            <span className="hidden font-mono text-2xs uppercase tracking-[0.18em] text-muted-foreground sm:inline">
+            <span className="hidden text-sm font-medium text-foreground sm:inline">
               Naitik Jasani / Writing
             </span>
           </Link>

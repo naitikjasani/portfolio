@@ -5,52 +5,30 @@ import { Reveal } from "@/components/shared/reveal";
 
 type SectionProps = {
   id: string;
-  index: string;
-  kicker: string;
   title: ReactNode;
   description?: ReactNode;
   children: ReactNode;
   className?: string;
-  containerClassName?: string;
 };
 
-/**
- * Consistent section shell: a monospaced index/kicker, a large heading,
- * an optional description, and the section body.
- */
-export function Section({
-  id,
-  index,
-  kicker,
-  title,
-  description,
-  children,
-  className,
-  containerClassName,
-}: SectionProps) {
+/** Consistent section shell: a heading, an optional one-line description, the body. */
+export function Section({ id, title, description, children, className }: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={cn("relative scroll-mt-20 py-12 sm:py-20", className)}
+      className={cn("relative scroll-mt-20 py-10 sm:py-14", className)}
     >
-      <div className={cn("container", containerClassName)}>
-        <Reveal className="mb-8 sm:mb-12">
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-2xs tracking-[0.2em] text-accent">
-              {index}
-            </span>
-            <span className="h-px w-8 bg-border" aria-hidden />
-            <span className="kicker text-muted-foreground">{kicker}</span>
-          </div>
+      <div className="container">
+        <Reveal className="mb-6 sm:mb-8">
           <h2
             id={`${id}-heading`}
-            className="mt-5 max-w-3xl text-balance font-display text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-4xl md:text-[2.75rem]"
+            className="text-balance text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl"
           >
             {title}
           </h2>
           {description ? (
-            <p className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground">
               {description}
             </p>
           ) : null}

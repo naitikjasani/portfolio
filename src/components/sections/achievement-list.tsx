@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import type { Achievement } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -15,8 +15,8 @@ export function AchievementList({ achievements }: { achievements: Achievement[] 
   const more = achievements.filter((a) => !a.primary);
 
   return (
-    <div>
-      <ul className="space-y-5">
+    <div className="mt-4">
+      <ul className="space-y-3">
         {primary.map((a) => (
           <Item key={a.label} a={a} />
         ))}
@@ -30,8 +30,8 @@ export function AchievementList({ achievements }: { achievements: Achievement[] 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-5 overflow-hidden pt-5"
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-3 overflow-hidden pt-3"
           >
             {more.map((a) => (
               <Item key={a.label} a={a} />
@@ -46,10 +46,10 @@ export function AchievementList({ achievements }: { achievements: Achievement[] 
           aria-expanded={open}
           aria-controls={id}
           onClick={() => setOpen((v) => !v)}
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-accent"
+          className="mt-3 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} />
-          {open ? "Show less" : `Show ${more.length} more`}
+          {open ? "Show less" : `${more.length} more`}
         </button>
       ) : null}
     </div>
@@ -58,19 +58,9 @@ export function AchievementList({ achievements }: { achievements: Achievement[] 
 
 function Item({ a }: { a: Achievement }) {
   return (
-    <li className="grid gap-1 sm:grid-cols-[6.5rem_1fr] sm:gap-4">
-      <div className="pt-0.5">
-        {a.metric ? (
-          <span className="metric text-base font-semibold text-foreground">{a.metric}</span>
-        ) : null}
-      </div>
-      <div className="min-w-0">
-        <div className="flex items-center gap-1.5 text-sm font-medium text-foreground">
-          <ChevronRight className="size-3.5 shrink-0 text-accent" />
-          {a.label}
-        </div>
-        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{a.detail}</p>
-      </div>
+    <li className="relative pl-4 text-base leading-relaxed text-muted-foreground">
+      <span className="absolute left-0 top-[0.7em] size-1.5 rounded-full bg-accent/70" aria-hidden />
+      <span className="font-medium text-foreground">{a.label}.</span> {a.detail}
     </li>
   );
 }

@@ -1,13 +1,12 @@
 "use client";
 
+import { Fragment } from "react";
+
 import { cn } from "@/lib/utils";
 import { resolveSkill } from "@/lib/skill-match";
 import { useSkillMatch } from "@/components/skills/skill-match-context";
 
-/**
- * Compact monospaced tag used for tech chips across the site.
- * Lights up when its skill is selected in Stack Match.
- */
+/** Small neutral tag (post tags). */
 export function TechPill({
   children,
   className,
@@ -15,21 +14,44 @@ export function TechPill({
   children: React.ReactNode;
   className?: string;
 }) {
-  const match = useSkillMatch();
-  const skill = typeof children === "string" ? resolveSkill(children) : null;
-  const lit = Boolean(skill && match?.selected.has(skill));
-
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border px-2.5 py-1 font-mono text-2xs tracking-wide transition-colors duration-300",
-        lit
-          ? "border-accent/60 bg-accent/15 text-accent shadow-[0_0_0_1px_hsl(var(--accent)/0.15)]"
-          : "border-border/80 bg-secondary/50 text-muted-foreground",
+        "inline-flex items-center rounded-md bg-secondary/70 px-2 py-0.5 text-xs text-muted-foreground",
         className,
       )}
     >
       {children}
     </span>
+  );
+}
+
+/**
+ * A stack written as plain text — "Node.js · TypeScript · MySQL" — where each
+ * item lights up when it's selected in Stack Match.
+ */
+export function StackLine({ items, className }: { items: string[]; className?: string }) {
+  const match = useSkillMatch();
+
+  return (
+    <p className={cn("flex flex-wrap items-center gap-y-1 text-sm leading-relaxed text-muted-foreground", className)}>
+      {items.map((item, i) => {
+        const skill = resolveSkill(item);
+        const lit = Boolean(skill && match?.selected.has(skill));
+        return (
+          <Fragment key={item}>
+            {i > 0 ? <span className="px-1.5 text-muted-foreground/50">·</span> : null}
+            <span
+              className={cn(
+                "rounded transition-colors duration-300",
+                lit && "bg-accent/15 px-1 font-medium text-accent",
+              )}
+            >
+              {item}
+            </span>
+          </Fragment>
+        );
+      })}
+    </p>
   );
 }

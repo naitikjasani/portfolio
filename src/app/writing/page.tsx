@@ -25,11 +25,7 @@ export default function WritingIndexPage() {
 
   return (
     <div className="container max-w-3xl py-16 sm:py-24">
-      <div className="flex items-center gap-3">
-        <span className="h-px w-8 bg-border" aria-hidden />
-        <span className="kicker text-muted-foreground">Writing</span>
-      </div>
-      <h1 className="mt-5 font-display text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
+      <h1 className="font-display text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
         Notes on backend systems.
       </h1>
       <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
@@ -45,7 +41,7 @@ export default function WritingIndexPage() {
               href={`/writing/${post.slug}`}
               className="group flex flex-col gap-3 py-7 transition-opacity"
             >
-              <div className="flex items-center gap-3 font-mono text-2xs uppercase tracking-[0.16em] text-muted-foreground">
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                 <span className="h-px w-4 bg-border" aria-hidden />
                 <span>{post.readingTime} min read</span>

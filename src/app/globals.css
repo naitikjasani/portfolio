@@ -28,7 +28,7 @@
     --secondary-foreground: 210 20% 92%;
 
     --muted: 222 14% 11%;
-    --muted-foreground: 216 12% 56%;
+    --muted-foreground: 218 12% 68%;
 
     --destructive: 0 72% 58%;
     --destructive-foreground: 210 40% 98%;
@@ -128,7 +128,7 @@
 
   /* Text that reads like a metric */
   .metric {
-    @apply font-mono tabular-nums tracking-tight;
+    @apply tabular-nums tracking-tight;
   }
 
   /* Card surface with a fine top-lit edge */

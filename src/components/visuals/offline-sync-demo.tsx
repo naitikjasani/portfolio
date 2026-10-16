@@ -76,7 +76,7 @@ export function OfflineSyncDemo() {
   const ignored = rows.length - stored;
 
   return (
-    <div className="w-full space-y-4 pt-5 text-left">
+    <div className="mt-5 w-full space-y-4 text-left">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-2">
         <button
@@ -182,9 +182,9 @@ export function OfflineSyncDemo() {
               <span className="text-foreground">Same key, same write:</span> the retry was ignored, so the
               workout is logged exactly once.
             </>
-          ) : (
-            <>Go offline, log a few workouts, reconnect — then retry a request.</>
-          )}
+          ) : rows.length ? (
+            <>Now retry the last request.</>
+          ) : null}
         </p>
         {rows.length || queue.length ? (
           <button
@@ -242,7 +242,7 @@ function Panel({
           <Icon className="size-3.5 text-muted-foreground" />
           {title}
         </div>
-        {meta ? <span className="font-mono text-2xs text-muted-foreground">{meta}</span> : null}
+        {meta ? <span className="text-xs text-muted-foreground">{meta}</span> : null}
       </div>
       <div className="min-h-[2.25rem]">{children}</div>
     </div>
@@ -265,7 +265,7 @@ function WriteRow({ write, tag, tone }: { write: Write; tag: string; tone?: "ok"
       </div>
       <span
         className={cn(
-          "shrink-0 font-mono text-2xs",
+          "shrink-0 text-xs",
           tone === "warn" ? "text-warning" : tone === "ok" ? "text-success" : "text-muted-foreground",
         )}
       >
