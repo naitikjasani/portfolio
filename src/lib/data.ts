@@ -30,9 +30,9 @@ export type Telemetry = {
 };
 
 export const telemetry: Telemetry[] = [
-  { label: "Daily transactions", value: "100K+", hint: "Healthcare provider portal" },
-  { label: "Service uptime", value: "99.9%", hint: "Production SLA" },
-  { label: "Throughput gain", value: "3–4×", hint: "Reactive vs blocking I/O" },
+  { label: "Order timeline", value: "26 sources", hint: "Unified observability at OZi" },
+  { label: "Daily transactions", value: "100K+", hint: "Healthcare portal, 99.9% uptime" },
+  { label: "Throughput gain", value: "3–4×", hint: "300+ req/s over legacy" },
   { label: "DSA problems", value: "1000+", hint: "LeetCode & Codeforces" },
 ];
 
@@ -42,15 +42,17 @@ export const telemetry: Telemetry[] = [
 
 export const about = {
   lead: "I build backend systems that hold up under real traffic.",
+  summary:
+    "Backend-focused Software Engineer building production order, returns and observability services in Node.js/TypeScript, with prior Java Spring Boot microservices experience in healthcare.",
   body: [
-    "My work sits behind the API line — the services, queues and data stores that keep moving when the load spikes. I care about how systems actually behave in production: where latency hides, how failures propagate, and where a queue is a better answer than another synchronous call.",
-    "I lean toward event-driven architectures and clean service boundaries, and I reach for the simplest design that survives the next order of magnitude. I like understanding how things work underneath — the runtime, the broker, the database — because that's usually where the interesting decisions are.",
+    "My work sits behind the API line — the services, queues and data stores that keep an order moving from checkout to doorstep and back again as a return. I care about how systems actually behave in production: where latency hides, how failures propagate, and how to make a retry safe instead of a second charge.",
+    "I lean toward event-driven designs, idempotent workflows and clean service boundaries, and I reach for the simplest design that survives the next order of magnitude. Then I instrument it — error grouping, latency percentiles and SLOs — so the next incident is a dashboard away, not a guessing game.",
   ],
   principles: [
     { k: "Bias", v: "Simplicity over cleverness" },
     { k: "Default", v: "Measure before optimizing" },
     { k: "Comfort zone", v: "Distributed systems" },
-    { k: "Non-negotiable", v: "Elegant, readable code" },
+    { k: "Non-negotiable", v: "Retries that are safe to retry" },
   ],
 };
 
@@ -67,6 +69,7 @@ export type Experience = {
   region: string;
   summary: string;
   stack: string[];
+  certificate?: string;
   achievements: { metric: string; label: string; detail: string }[];
 };
 
@@ -79,75 +82,83 @@ export const experiences: Experience[] = [
     status: "RUNNING",
     region: "Quick Commerce",
     summary:
-      "Building the backend behind a quick-commerce platform — the order-management lifecycle and the event pipelines that keep it consistent under time-sensitive load.",
-    stack: ["Node.js", "TypeScript", "Express", "Kafka", "Redis", "MySQL", "MongoDB"],
+      "Building the order service behind a quick-commerce platform — order placement, live tracking, returns and admin operations — plus the queues and observability that keep it consistent under time-sensitive load.",
+    stack: ["Node.js", "TypeScript", "Express", "AWS SQS FIFO", "MySQL", "Redis", "Jest"],
     achievements: [
       {
-        metric: "20+ APIs",
-        label: "Order-management REST APIs",
+        metric: "Order APIs",
+        label: "Production order service",
         detail:
-          "Built 20+ production REST APIs in Node.js, TypeScript and Express powering the end-to-end order lifecycle.",
+          "Built multiple production REST APIs for a Node.js/TypeScript order service powering order placement, live tracking, returns and admin operations.",
       },
       {
-        metric: "Kafka",
-        label: "Async post-order pipelines",
+        metric: "SQS FIFO",
+        label: "Ordered async workflows",
         detail:
-          "Moved status transitions, order confirmations and downstream notifications onto Kafka, decoupling services with reliable delivery.",
+          "Built AWS SQS FIFO workflows for inventory, logistics, wallet settlement and notifications, plus claim-based redrive that prevented duplicate wallet deductions.",
       },
       {
-        metric: "Redis",
-        label: "Hot-read caching",
+        metric: "26 sources",
+        label: "Observability platform",
         detail:
-          "Designed MySQL and MongoDB schemas for order data and layered Redis over high-frequency reads, cutting redundant queries on critical endpoints.",
+          "Built an observability platform with error grouping, latency percentiles, SLOs, error budgets, Slack alerts and a unified order timeline across 26 data sources.",
       },
       {
-        metric: "Garuda",
-        label: "Fast-order-placement service",
+        metric: "180+ tests",
+        label: "Return pickup capacity",
         detail:
-          "Building Garuda, a dedicated service that offloads order processing to asynchronous workflows to cut placement latency for time-sensitive checkouts.",
+          "Designed return and exchange pickup capacity management end to end — MySQL schema, IST-aware engine, CX overrides and admin UI — verified with 180+ tests.",
+      },
+      {
+        metric: "Rescheduling",
+        label: "Failed-return recovery",
+        detail:
+          "Shipped failed-return rescheduling with eligibility checks, WhatsApp notifications, deep-link CTAs and quiet-hours-aware reminders.",
       },
     ],
   },
   {
     slug: "svc-bajaj-finserv-health",
     company: "Bajaj Finserv Health",
-    role: "Software Engineer Intern",
+    role: "Software Engineer Intern – Backend",
     period: "Jul – Oct 2025",
     status: "STABLE",
     region: "Healthcare",
     summary:
-      "Engineered reactive Spring services for the Universal Provider Portal — hospital-payer integrations across 50+ partner hospitals at 100K+ daily transactions.",
-    stack: ["Spring Boot", "Spring WebFlux", "PostgreSQL", "Redis", "ELK", "ArgoCD"],
+      "Engineered Spring Boot microservices for the Universal Provider Portal — hospital-payer integrations across 50+ partner hospitals at 100K+ daily transactions.",
+    stack: ["Java", "Spring Boot", "PostgreSQL", "Redis", "ELK", "ArgoCD"],
+    certificate:
+      "https://drive.google.com/file/d/1mw6YdjtR87CbEjollTi1pjNv_WN14vHa/view?usp=sharing",
     achievements: [
       {
         metric: "100K+/day",
         label: "Provider portal at 99.9% uptime",
         detail:
-          "Spring Boot microservices for the Universal Provider Portal (UPP), supporting 50+ partner hospitals and 100K+ daily transactions at 99.9% uptime.",
+          "Spring Boot microservices for the Universal Provider Portal (UPP), supporting hospital-payer integrations across 50+ partner hospitals and 100K+ daily transactions at 99.9% uptime.",
       },
       {
         metric: "3–4× tput",
-        label: "Reactive WebFlux services",
+        label: "Throughput under load",
         detail:
-          "Sustained 300+ requests/second under concurrent load with Spring WebFlux — a 3–4× throughput gain over the legacy blocking I/O implementation.",
+          "Improved backend throughput to 300+ requests/second under concurrent load — a 3–4× improvement over the legacy implementation.",
       },
       {
         metric: "MTTR −40%",
         label: "ELK observability",
         detail:
-          "Centralized structured logs and real-time Kibana dashboards on the ELK stack, cutting mean time to resolution for production incidents by 40%.",
+          "Centralized structured logs and real-time Kibana dashboards on the ELK Stack, cutting mean time to resolution for production incidents by 40%.",
       },
       {
         metric: "API −30–35%",
         label: "Latency tuning",
         detail:
-          "Paired PostgreSQL persistence with a Redis caching layer to cut critical API response times by 30–35%.",
+          "Paired PostgreSQL with a Redis caching layer for hot data to cut critical API response times by 30–35%.",
       },
       {
         metric: "Zero-downtime",
-        label: "ArgoCD GitOps delivery",
+        label: "ArgoCD delivery",
         detail:
-          "ArgoCD-driven CI/CD halved manual deployment effort and enabled zero-downtime releases across services.",
+          "Automated ArgoCD-driven CI/CD deployments, halving manual deployment effort and enabling zero-downtime releases.",
       },
     ],
   },
@@ -166,48 +177,48 @@ export type Project = {
   description: string;
   highlights: string[];
   stack: string[];
-  repo: string;
+  /** Omitted for private repositories. */
+  repo?: string;
   demo?: string;
-  visual: "ble" | "architecture";
+  visual: "ble" | "sync";
 };
 
 export const projects: Project[] = [
   {
+    slug: "ekayu",
+    name: "Ekayu",
+    category: "Full-stack · Data",
+    year: "Aug 2026 – Present",
+    tagline: "A private health & life record that works offline and never loses a write.",
+    description:
+      "A personal health and life-record app, built solo as a 7-package TypeScript monorepo on PostgreSQL and Supabase — 115 pages and 103 tables behind strict CI checks. Designed so history is never overwritten and a logged dose or workout is never counted twice.",
+    highlights: [
+      "Append-only data model — edits add corrections instead of overwriting, so any past state stays queryable",
+      "Offline sync built from scratch: a device-side queue, logical clocks to order cross-device edits",
+      "Idempotency keys so retries never log the same dose or workout twice",
+      "Closed by default — row-level security forced with zero policies, so the public API key reaches nothing, verified by a dedicated test suite",
+    ],
+    stack: ["TypeScript", "Next.js", "PostgreSQL", "Supabase", "Drizzle", "Turborepo", "Vitest"],
+    demo: "https://ekayu.vercel.app/",
+    visual: "sync",
+  },
+  {
     slug: "proximity-ad-delivery",
     name: "Proximity Ad Delivery",
     category: "IoT · Backend",
-    year: "2024 – 2025",
+    year: "Oct 2024 – Feb 2025",
     tagline: "Serving the right ad to the right device, by proximity.",
     description:
-      "An IoT advertising system pairing Raspberry Pi BLE nodes with an Express.js backend: it detects nearby devices, ranks them by signal strength, and serves personalized ads within a 5–10 m range — with the Gemini API generating the ad content.",
+      "An IoT advertising system pairing Raspberry Pi BLE nodes with an Express.js backend: it detects nearby devices, ranks them by signal strength, and serves personalized, AI-generated ads within a 5–10 m range.",
     highlights: [
-      "Detects 20+ nearby BLE devices per node at <100 ms latency",
+      "Detects 20+ nearby BLE devices per node in under 100 ms",
       "Serves proximity-targeted ads within 5–10 m for 35–40% higher engagement",
-      "Gemini API generates ad content, cutting manual creation effort by 60%",
-      "MongoDB persists proximity events and user-interaction analytics",
+      "Gemini API generates personalized ad content per audience",
+      "MongoDB persists proximity events and interaction analytics",
     ],
-    stack: ["Node.js", "Express", "Python", "BLE", "Gemini API", "MongoDB"],
+    stack: ["Node.js", "Express", "Python", "Raspberry Pi", "BLE", "Gemini API", "MongoDB"],
     repo: "https://github.com/flicktoss/CTIOT-Smart-Advertising",
     visual: "ble",
-  },
-  {
-    slug: "study-resource-platform",
-    name: "LNMIIT Study Resource Platform",
-    category: "Platform · Backend",
-    year: "2024",
-    tagline: "Access-controlled academic resources, from schema to endpoint.",
-    description:
-      "A full-stack platform for organizing and sharing academic resources for 100+ users, built around a clean JWT + role-based access model with admin-moderated uploads.",
-    highlights: [
-      "Full-stack platform for 100+ users with secure file access and bookmarking",
-      "JWT-based RBAC enforced per route and resource",
-      "Admin-moderated upload workflows keep content trustworthy",
-      "Blocked 90% of unauthorized access attempts in testing",
-    ],
-    stack: ["Node.js", "Express", "MongoDB", "JWT", "RBAC", "REST"],
-    repo: "https://github.com/flicktoss/LNMIIT-Study-Resources-Management-System",
-    demo: "https://lnmiit-study-resouces-management-system.vercel.app/",
-    visual: "architecture",
   },
 ];
 
@@ -233,64 +244,75 @@ export const techGroups: TechGroup[] = [
     label: "Languages",
     caption: "Where the logic lives",
     items: [
-      { name: "Java", note: "Primary JVM language for service work" },
-      { name: "TypeScript", note: "Typed backends and tooling" },
+      { name: "Java", note: "Spring Boot microservices at Bajaj Finserv Health" },
+      { name: "TypeScript", note: "Order service at OZi, Ekayu monorepo" },
       { name: "JavaScript", note: "Node.js runtime & scripting" },
-      { name: "Python", note: "IoT services, scripting & automation" },
+      { name: "Python", note: "IoT nodes, scripting & automation" },
       { name: "SQL", note: "Query design and schema modelling" },
     ],
   },
   {
     id: "backend",
-    label: "Backend",
-    caption: "Frameworks & runtimes",
+    label: "Backend & Frameworks",
+    caption: "Services & runtimes",
     items: [
-      { name: "Spring Boot", note: "Production JVM services" },
-      { name: "Spring WebFlux", note: "Reactive, non-blocking I/O" },
-      { name: "Node.js", note: "Event-loop backends at OZi" },
-      { name: "Express", note: "Lean REST service layer" },
-    ],
-  },
-  {
-    id: "messaging",
-    label: "Messaging",
-    caption: "How services talk",
-    items: [
-      { name: "Kafka", note: "Event backbone for async flows" },
+      { name: "Node.js", note: "Production order service at OZi" },
+      { name: "Express.js", note: "Lean REST service layer" },
+      { name: "NestJS", note: "Structured, modular Node services" },
+      { name: "Spring Boot", note: "Healthcare microservices" },
       { name: "REST APIs", note: "Versioned, typed contracts" },
-      { name: "Event-Driven", note: "Decoupled producers & consumers" },
+      { name: "gRPC", note: "Typed service-to-service calls" },
+      { name: "Microservices", note: "Clear service boundaries" },
+      { name: "React", note: "Admin UIs and front ends" },
     ],
   },
   {
     id: "data",
-    label: "Data",
+    label: "Databases",
     caption: "State & storage",
     items: [
-      { name: "PostgreSQL", note: "Relational workloads" },
-      { name: "MySQL", note: "Transactional data at OZi" },
-      { name: "MongoDB", note: "Document store for IoT timelines" },
-      { name: "Redis", note: "Caching, locks & idempotency" },
+      { name: "MySQL", note: "Transactional order data at OZi" },
+      { name: "PostgreSQL", note: "Provider portal & Ekayu's 103 tables" },
+      { name: "MongoDB", note: "Document store for IoT events" },
+      { name: "Redis", note: "Caching hot reads, locks" },
+      { name: "Supabase", note: "Postgres with forced row-level security" },
+    ],
+  },
+  {
+    id: "messaging",
+    label: "Messaging & Architecture",
+    caption: "How services talk",
+    items: [
+      { name: "AWS SQS (FIFO)", note: "Ordered workflows with claim-based redrive" },
+      { name: "Apache Kafka", note: "Event streaming backbone" },
+      { name: "Event-Driven", note: "Decoupled producers & consumers" },
+      { name: "Distributed Systems", note: "Consistency, ordering, failure modes" },
+      { name: "Idempotency", note: "Retries that never double-charge" },
     ],
   },
   {
     id: "infra",
-    label: "Infra & DevOps",
+    label: "Cloud & DevOps",
     caption: "Ship & operate",
     items: [
+      { name: "AWS", note: "EC2, S3 and SQS" },
       { name: "Docker", note: "Reproducible service images" },
-      { name: "ArgoCD", note: "GitOps continuous delivery" },
-      { name: "CI/CD", note: "Automated build & release" },
-      { name: "Git", note: "Trunk-based collaboration" },
+      { name: "GitHub Actions", note: "CI checks on every push" },
+      { name: "ArgoCD", note: "GitOps, zero-downtime releases" },
+      { name: "Sentry", note: "Error tracking & alerting" },
+      { name: "ELK", note: "Centralized logs & Kibana dashboards" },
     ],
   },
   {
-    id: "observability",
-    label: "Observability",
-    caption: "See what's happening",
+    id: "quality",
+    label: "Testing & Core CS",
+    caption: "Proving it works",
     items: [
-      { name: "ELK", note: "Centralized logs & tracing" },
+      { name: "Jest", note: "Unit & integration suites — 180+ tests on one feature" },
+      { name: "Puppeteer", note: "End-to-end browser testing" },
       { name: "System Design", note: "Capacity & failure modelling" },
-      { name: "DSA", note: "1000+ on LeetCode & Codeforces" },
+      { name: "OOP", note: "Clean, testable domain models" },
+      { name: "DSA", note: "1000+ problems on LeetCode & Codeforces" },
     ],
   },
 ];
@@ -319,7 +341,7 @@ export const philosophy: Principle[] = [
   {
     index: "03",
     title: "Design for failure",
-    body: "Networks partition, brokers lag, dependencies time out. I assume it and design around it — timeouts, retries with backoff, idempotency, and clear failure modes.",
+    body: "Networks partition, queues redeliver, dependencies time out. I assume it and design around it — timeouts, retries with backoff, idempotency, and clear failure modes.",
   },
   {
     index: "04",
@@ -345,24 +367,24 @@ export type Achievement = {
 
 export const achievements: Achievement[] = [
   {
-    value: "100K+",
-    label: "Daily transactions",
-    detail: "Healthcare provider portal served at 99.9% uptime.",
-  },
-  {
-    value: "3–4×",
-    label: "Throughput gain",
-    detail: "Reactive Spring WebFlux over legacy blocking I/O.",
-  },
-  {
-    value: "1000+",
-    label: "DSA problems solved",
-    detail: "Sustained practice across LeetCode and Codeforces.",
+    value: "180+",
+    label: "Tests on one feature",
+    detail: "Return pickup capacity, verified end to end at OZi.",
   },
   {
     value: "40%",
     label: "Faster incident resolution",
     detail: "ELK + Kibana observability cut mean time to resolution.",
+  },
+  {
+    value: "30–35%",
+    label: "Lower API latency",
+    detail: "Redis caching over PostgreSQL for hot data.",
+  },
+  {
+    value: "50+",
+    label: "Partner hospitals",
+    detail: "Hospital-payer integrations on the provider portal.",
   },
 ];
 
@@ -384,23 +406,33 @@ export const timeline: TimelineEntry[] = [
     title: "Backend Developer",
     org: "OZi",
     description:
-      "Building event-driven order-management services for quick commerce with Node.js, Kafka and Redis.",
+      "Order, returns and observability services for quick commerce with Node.js, TypeScript, AWS SQS FIFO and MySQL.",
     kind: "work",
   },
   {
     period: "Jul – Oct 2025",
-    title: "Software Engineer Intern",
+    title: "Software Engineer Intern – Backend",
     org: "Bajaj Finserv Health",
     description:
-      "Reactive Spring WebFlux services for a provider portal at 100K+ daily transactions, with ELK observability and ArgoCD delivery.",
+      "Spring Boot microservices for a provider portal at 100K+ daily transactions, with ELK observability and ArgoCD delivery.",
     kind: "work",
   },
   {
-    period: "2022 – 2026",
+    period: "Oct 2022 – May 2026",
     title: "B.Tech, Computer Science & Engineering",
-    org: "LNMIIT, Jaipur",
+    org: "The LNM Institute of Information Technology, Jaipur",
     description:
       "Computer science foundations — systems, networks, databases and algorithms. CGPA 7.64 / 10.",
     kind: "education",
   },
+];
+
+/* ------------------------------------------------------------------ */
+/* Leadership & activities                                             */
+/* ------------------------------------------------------------------ */
+
+export const leadership: { role: string; org: string }[] = [
+  { role: "Coordinator", org: "Table Tennis Club" },
+  { role: "Executive Member", org: "Training & Placement Cell" },
+  { role: "Member", org: "Entrepreneurship Club" },
 ];

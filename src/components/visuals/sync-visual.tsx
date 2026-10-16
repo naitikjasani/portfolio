@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import {
   Database,
-  KeyRound,
-  Layers,
-  MonitorSmartphone,
+  Fingerprint,
+  ListOrdered,
   ShieldCheck,
+  Smartphone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -22,28 +22,33 @@ type Stage = {
 };
 
 const stages: Stage[] = [
-  { icon: MonitorSmartphone, label: "Client", sub: "Web / API consumer", edge: "HTTPS" },
-  { icon: Layers, label: "Express API", sub: "Routing · validation", edge: "REST" },
+  { icon: Smartphone, label: "Device", sub: "Works offline · optimistic UI", edge: "" },
   {
-    icon: ShieldCheck,
-    label: "Auth Layer",
-    sub: "JWT verify · RBAC guard",
-    edge: "authorize",
+    icon: ListOrdered,
+    label: "Outbox Queue",
+    sub: "Durable · logical-clock ordered",
+    edge: "enqueue",
+  },
+  {
+    icon: Fingerprint,
+    label: "Idempotent API",
+    sub: "Dedupe on idempotency key",
+    edge: "drain on reconnect",
     highlight: true,
   },
-  { icon: KeyRound, label: "Service Layer", sub: "Business logic", edge: "invoke" },
-  { icon: Database, label: "Data Store", sub: "Relational schema", edge: "query" },
+  { icon: Database, label: "Append-only Log", sub: "Corrections, never overwrites", edge: "write once" },
+  { icon: ShieldCheck, label: "Postgres + RLS", sub: "Forced RLS · zero policies", edge: "persist" },
 ];
 
 /**
- * A top-to-bottom request flow diagram with packets travelling between stages.
- * The auth layer is emphasized — the heart of the project.
+ * Ekayu's write path, top to bottom, with packets travelling between stages.
+ * The idempotency step is emphasized — it's what makes retries safe.
  */
-export function ArchitectureVisual() {
+export function SyncVisual() {
   const reduced = usePrefersReducedMotion();
 
   return (
-    <div className="mx-auto w-full max-w-sm py-2">
+    <div className="mx-auto w-full max-w-sm pb-2 pt-6">
       {stages.map((stage, i) => (
         <div key={stage.label}>
           <StageCard stage={stage} index={i} />

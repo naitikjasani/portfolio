@@ -1,4 +1,4 @@
-import { Activity, ChevronRight } from "lucide-react";
+import { Activity, ArrowUpRight, ChevronRight } from "lucide-react";
 
 import { experiences, type Experience as ExperienceType } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -13,7 +13,7 @@ export function Experience() {
       index="02"
       kicker="Experience"
       title="Deployed to production."
-      description="Two environments, two domains. Each role, framed the way I think about it — as a running service with a clear contract and measurable outcomes."
+      description="Two environments, two domains — quick commerce and healthcare. Each role, framed the way I think about it — as a running service with a clear contract and measurable outcomes."
     >
       <div className="space-y-6">
         {experiences.map((exp, i) => (
@@ -83,6 +83,18 @@ function ServiceCard({ exp }: { exp: ExperienceType }) {
               <TechPill key={tech}>{tech}</TechPill>
             ))}
           </div>
+
+          {exp.certificate ? (
+            <a
+              href={exp.certificate}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-accent"
+            >
+              Internship certificate
+              <ArrowUpRight className="size-4" />
+            </a>
+          ) : null}
         </div>
 
         {/* achievements */}

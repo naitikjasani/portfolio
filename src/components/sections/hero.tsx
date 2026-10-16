@@ -74,9 +74,9 @@ export function Hero() {
             variants={item}
             className="mt-7 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Backend software engineer at {site.company} with production experience across
-            quick commerce and healthcare. I build event-driven services with Java, Spring
-            Boot, Node.js, Kafka and Redis — and care about how they behave when it matters.
+            Backend software engineer at {site.company}, building the order, returns and
+            observability services behind a quick-commerce platform in Node.js and
+            TypeScript — with prior Java Spring Boot microservices experience in healthcare.
           </motion.p>
 
           {/* CTAs */}

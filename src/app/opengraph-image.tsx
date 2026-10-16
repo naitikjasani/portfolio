@@ -6,7 +6,7 @@ export const alt = `${site.name} — ${site.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const stack = ["Java", "Spring Boot", "Node.js", "Kafka", "Redis"];
+const stack = ["Node.js", "TypeScript", "AWS SQS", "Java", "Spring Boot"];
 
 export default function OpengraphImage() {
   return new ImageResponse(
