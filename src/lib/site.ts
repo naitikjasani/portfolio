@@ -19,7 +19,7 @@ export const site = {
   location: "India",
   // Handles — the single source of truth. Display strings are derived from these.
   handles: {
-    github: "flicktoss",
+    github: "naitikjasani",
     linkedin: "naitikjasani",
     leetcode: "flicktoss",
     codeforces: "flicktoss",
@@ -27,7 +27,7 @@ export const site = {
     twitter: "flicktoss",
   },
   socials: {
-    github: "https://github.com/flicktoss",
+    github: "https://github.com/naitikjasani",
     linkedin: "https://www.linkedin.com/in/naitikjasani",
     email: "mailto:naitik.jasani.work@gmail.com",
   },

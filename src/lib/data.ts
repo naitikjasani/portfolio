@@ -217,7 +217,7 @@ export const projects: Project[] = [
       "MongoDB persists proximity events and interaction analytics",
     ],
     stack: ["Node.js", "Express", "Python", "Raspberry Pi", "BLE", "Gemini API", "MongoDB"],
-    repo: "https://github.com/flicktoss/CTIOT-Smart-Advertising",
+    repo: "https://github.com/naitikjasani/CTIOT-Smart-Advertising",
     visual: "ble",
   },
 ];
