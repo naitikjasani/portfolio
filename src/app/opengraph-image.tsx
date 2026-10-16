@@ -6,7 +6,7 @@ export const alt = `${site.name} — ${site.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const stack = ["Node.js", "TypeScript", "AWS SQS", "Java", "Spring Boot"];
+const stack = ["React", "Next.js", "Node.js", "Java", "AWS"];
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -107,7 +107,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            Backend engineer building order, returns and wallet workflows at OZi.
+            Software engineer at OZi. I build software end to end — full-stack, backend, frontend and DevOps.
           </div>
         </div>
 

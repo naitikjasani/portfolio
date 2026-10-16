@@ -21,6 +21,7 @@ export function Section({ id, title, description, children, className }: Section
     >
       <div className="container">
         <Reveal className="mb-6 sm:mb-8">
+          <span className="bg-gradient-accent mb-4 block h-1 w-10 rounded-full" aria-hidden />
           <h2
             id={`${id}-heading`}
             className="text-balance text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl"

@@ -64,6 +64,7 @@ export function matchTerm(term: string): MatchResult {
 const NO_SCAN = new Set([
   "rest", "testing", "caching", "express", "spring", "node", "ci", "ts", "js", "go",
   "queues", "containers", "distributed", "argo", "e2e", "react", "hld", "lld", "eda",
+  "next", "framer", "animations",
 ]);
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

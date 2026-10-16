@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MobileCta } from "@/components/layout/mobile-cta";
 import { SkillMatchProvider } from "@/components/skills/skill-match-context";
+import { PageBackdrop } from "@/components/backgrounds/page-backdrop";
 import { Hero } from "@/components/sections/hero";
 import { Experience } from "@/components/sections/experience";
 import { Projects } from "@/components/sections/projects";
@@ -13,6 +14,7 @@ import { Contact } from "@/components/sections/contact";
 export default function HomePage() {
   return (
     <SkillMatchProvider>
+      <PageBackdrop />
       <Navbar />
       <main id="main">
         <Hero />

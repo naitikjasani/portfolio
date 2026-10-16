@@ -4,11 +4,11 @@
  */
 export const site = {
   name: "Naitik Jasani",
-  role: "Backend Software Engineer",
+  role: "Software Engineer",
   company: "OZi",
   tagline: "Building scalable backend systems.",
   description:
-    "Naitik Jasani is a backend software engineer at OZi building production order, returns and observability services in Node.js and TypeScript on AWS SQS and MySQL — with prior Java Spring Boot microservices experience in healthcare.",
+    "Naitik Jasani is a software engineer at OZi who builds end to end — Node.js and Java services, React and Next.js front ends, and the AWS, Docker and CI/CD that ship them. Open to full-stack, backend, frontend and DevOps roles.",
   // Deployed domain — drives canonical URLs, sitemap, and OG/Twitter tags.
   url: "https://naitik-jasani.vercel.app",
   locale: "en_US",
@@ -19,7 +19,9 @@ export const site = {
   location: "India",
   relocation: "Open to relocation",
   // Hiring signal shown in the hero, contact section and mobile CTA.
-  availability: "Open to backend SDE roles",
+  availability: "Open to software engineering roles",
+  // Role families to show alongside availability.
+  roles: ["Full-stack", "Backend", "Frontend", "DevOps"],
   // Handles — the single source of truth. Display strings are derived from these.
   handles: {
     github: "naitikjasani",
@@ -44,12 +46,16 @@ export const site = {
   resumePdf: "/Naitik_Jasani_Resume.pdf",
   keywords: [
     "Naitik Jasani",
+    "Software Engineer",
+    "Full Stack Developer",
     "Backend Engineer",
-    "Backend Software Engineer",
+    "Frontend Developer",
+    "DevOps",
+    "React",
+    "Next.js",
     "Distributed Systems",
     "Microservices",
     "Event-Driven Architecture",
-    "Software Engineer",
     "SDE",
     "Node.js",
     "TypeScript",

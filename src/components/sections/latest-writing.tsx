@@ -12,12 +12,12 @@ export function LatestWriting() {
   return (
     <Section id="writing" title="Writing">
       <Reveal>
-        <ul className="divide-y divide-border/70 border-y border-border/70">
+        <ul className="glass divide-y divide-white/[0.06] overflow-hidden">
           {posts.map((post) => (
             <li key={post.slug}>
               <Link
                 href={`/writing/${post.slug}`}
-                className="group grid grid-cols-1 gap-1 py-5 sm:grid-cols-[1fr_auto] sm:gap-8"
+                className="group grid grid-cols-1 gap-1 px-6 py-5 transition-colors hover:bg-white/[0.03] sm:grid-cols-[1fr_auto] sm:gap-8"
               >
                 <div>
                   <h3 className="text-lg font-medium text-foreground transition-colors group-hover:text-accent">

@@ -27,9 +27,9 @@ export type Telemetry = {
 };
 
 export const telemetry: Telemetry[] = [
-  { label: "Order timeline", value: "26 sources", hint: "Unified observability at OZi" },
   { label: "Daily transactions", value: "100K+", hint: "Healthcare portal, 99.9% uptime" },
   { label: "Throughput gain", value: "3–4×", hint: "300+ req/s over legacy" },
+  { label: "Full-stack app, solo", value: "115 pages", hint: "Next.js + Postgres, 103 tables" },
   { label: "DSA problems", value: "1000+", hint: "LeetCode & Codeforces" },
 ];
 
@@ -193,9 +193,24 @@ export const projects: Project[] = [
       { value: "103", label: "tables" },
       { value: "0", label: "RLS policies" },
     ],
-    stack: ["TypeScript", "Next.js", "PostgreSQL", "Supabase", "Drizzle", "Turborepo", "Vitest"],
+    stack: ["TypeScript", "Next.js", "React", "PostgreSQL", "Supabase", "Drizzle", "Turborepo", "Vitest"],
     demo: "https://ekayu.vercel.app/",
     demoNote: "sign-in required",
+  },
+  {
+    slug: "portfolio",
+    name: "This portfolio",
+    category: "Frontend",
+    year: "2026",
+    tagline: "The site you're reading — designed and built from scratch.",
+    description:
+      "A statically rendered Next.js site with two hand-built interactive pieces: Stack Match, which scans a pasted job description client-side, and the Ekayu write-path simulator above.",
+    highlights: [
+      "Fully static — about 170 kB of first-load JavaScript, MDX blog compiled at build time",
+      "Keyboard-accessible controls and a reduced-motion mode throughout",
+    ],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "MDX", "Vercel"],
+    repo: "https://github.com/naitikjasani/portfolio",
   },
   {
     slug: "proximity-ad-delivery",
@@ -244,6 +259,17 @@ export const techGroups: TechGroup[] = [
     ],
   },
   {
+    id: "frontend",
+    label: "Frontend",
+    items: [
+      { name: "React", note: "Ekayu, admin UIs and this site", aliases: ["reactjs", "react.js"] },
+      { name: "Next.js", note: "App Router — Ekayu's 115 pages and this site", aliases: ["nextjs", "next"] },
+      { name: "Tailwind CSS", note: "Design systems and responsive layouts", aliases: ["tailwind", "tailwindcss"] },
+      { name: "HTML & CSS", note: "Semantic, accessible markup", aliases: ["html", "css", "html5", "css3"] },
+      { name: "Framer Motion", note: "Interaction and motion on this site", aliases: ["framer", "animations"] },
+    ],
+  },
+  {
     id: "backend",
     label: "Backend & Frameworks",
     items: [
@@ -254,7 +280,6 @@ export const techGroups: TechGroup[] = [
       { name: "REST APIs", note: "Versioned, typed contracts", aliases: ["rest", "restful", "api design"] },
       { name: "gRPC", note: "Typed service-to-service calls", aliases: ["grpc", "protobuf"] },
       { name: "Microservices", note: "Clear service boundaries", aliases: ["microservice"] },
-      { name: "React", note: "Admin UIs; Next.js for Ekayu", aliases: ["reactjs", "react.js", "next.js", "nextjs"] },
     ],
   },
   {
@@ -295,6 +320,7 @@ export const techGroups: TechGroup[] = [
       { name: "Docker", note: "Reproducible service images", aliases: ["containers"] },
       { name: "GitHub Actions", note: "CI checks on every push", aliases: ["ci", "ci/cd", "cicd"] },
       { name: "ArgoCD", note: "GitOps, zero-downtime releases", aliases: ["argo", "gitops", "argo cd"] },
+      { name: "Vercel", note: "Ships Ekayu and this site" },
       { name: "Sentry", note: "Error tracking & alerting" },
       { name: "ELK", note: "Centralized logs & Kibana dashboards", aliases: ["elasticsearch", "kibana", "logstash", "elk stack"] },
     ],
@@ -319,6 +345,14 @@ export const techGroups: TechGroup[] = [
 export const knownGapTerms = [
   "Go",
   "Golang",
+  "Angular",
+  "Vue",
+  "Svelte",
+  "Redux",
+  "React Native",
+  "Flutter",
+  "Jenkins",
+  "Ansible",
   "Kubernetes",
   "Terraform",
   "GraphQL",

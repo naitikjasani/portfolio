@@ -1,16 +1,19 @@
 "use client";
 
-import { Check, Copy, Download, Github, Linkedin } from "lucide-react";
+import { Check, Cloud, Copy, Download, Github, Layers, Linkedin, Monitor, Server } from "lucide-react";
 
 import { site } from "@/lib/site";
 import { telemetry } from "@/lib/data";
 import { useCopyEmail } from "@/hooks/use-copy-email";
 import { Button } from "@/components/ui/button";
 import { StatusDot } from "@/components/shared/status-dot";
+import { GridBackground } from "@/components/backgrounds/grid-background";
 import { NetworkCanvas } from "@/components/backgrounds/network-canvas";
 
+const roleIcons = { "Full-stack": Layers, Backend: Server, Frontend: Monitor, DevOps: Cloud } as const;
+
 /**
- * First viewport = the whole pitch: who, what, where, availability, proof, and
+ * First viewport = the whole pitch: who, what, availability, proof, and
  * one-click résumé. Rendered without entrance animation so it paints immediately.
  */
 export function Hero() {
@@ -21,7 +24,8 @@ export function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pb-14 pt-28"
     >
-      <NetworkCanvas className="mask-b-faded" opacity={0.35} />
+      <GridBackground />
+      <NetworkCanvas className="mask-b-faded" opacity={0.6} />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"
         aria-hidden
@@ -29,35 +33,49 @@ export function Hero() {
 
       <div className="container relative">
         <div className="max-w-3xl">
-          <p className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-            <span className="inline-flex items-center gap-2 font-medium text-success">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1 text-sm font-medium text-success">
               <StatusDot />
               {site.availability}
             </span>
-            <span aria-hidden className="hidden sm:inline">
-              ·
+            <span className="text-sm text-muted-foreground">
+              {site.location} · {site.relocation.toLowerCase()}
             </span>
-            <span>
-              {site.location}, {site.relocation.toLowerCase()}
-            </span>
-          </p>
+          </div>
 
-          <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.1] tracking-[-0.03em] text-foreground sm:text-5xl">
-            Hi, I&apos;m {site.name}. I build order, returns and wallet systems at {site.company}.
+          <h1 className="mt-7 text-balance text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-foreground sm:text-6xl">
+            Hi, I&apos;m {site.name}.
+            <br className="hidden sm:block" /> I build software{" "}
+            <span className="text-gradient">end to end.</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-            Backend engineer working in Node.js, TypeScript and AWS SQS. Previously built Java
-            Spring Boot services at Bajaj Finserv Health. B.Tech CSE, LNMIIT, 2026.
+          <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
+            Software engineer at {site.company}. I work across the stack — Node.js and Java
+            services, React and Next.js front ends, and the AWS, Docker and CI/CD that ship them.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Roles I'm open to">
+            {site.roles.map((role) => {
+              const Icon = roleIcons[role];
+              return (
+                <li
+                  key={role}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-sm text-foreground/90"
+                >
+                  <Icon className="size-4 text-accent" />
+                  {role}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-9 flex flex-wrap items-center gap-3">
             <Button asChild variant="accent" size="lg">
               <a href={site.resumePdf} download>
                 <Download />
                 Download résumé
               </a>
             </Button>
-            <Button variant="outline" size="lg" onClick={copy} aria-live="polite">
+            <Button variant="outline" size="lg" onClick={copy} aria-live="polite" className="bg-background/40 backdrop-blur">
               {copied ? <Check className="text-success" /> : <Copy />}
               {copied ? "Email copied" : "Copy email"}
             </Button>
@@ -70,12 +88,12 @@ export function Hero() {
           </div>
         </div>
 
-        <dl className="mt-14 grid max-w-4xl grid-cols-2 gap-x-6 gap-y-6 border-t border-border/70 pt-6 sm:grid-cols-4">
+        <dl className="glass mt-14 grid max-w-4xl grid-cols-2 gap-px overflow-hidden sm:grid-cols-4">
           {telemetry.map((t) => (
-            <div key={t.label}>
+            <div key={t.label} className="p-5">
               <dt className="text-sm text-muted-foreground">{t.label}</dt>
-              <dd className="metric mt-1 text-2xl font-semibold text-foreground">{t.value}</dd>
-              <dd className="mt-0.5 text-sm text-muted-foreground">{t.hint}</dd>
+              <dd className="metric text-gradient mt-1 text-3xl font-semibold">{t.value}</dd>
+              <dd className="mt-1 text-sm text-muted-foreground">{t.hint}</dd>
             </div>
           ))}
         </dl>
@@ -99,7 +117,7 @@ function IconLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="grid size-11 place-items-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+      className="grid size-11 place-items-center rounded-lg border border-border bg-background/40 text-muted-foreground backdrop-blur transition-colors hover:border-foreground/30 hover:text-foreground"
     >
       {children}
     </a>
