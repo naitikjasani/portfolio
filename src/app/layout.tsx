@@ -67,6 +67,7 @@ const jsonLd = {
   url: site.url,
   email: site.email,
   worksFor: { "@type": "Organization", name: site.company },
+  homeLocation: { "@type": "Country", name: site.location },
   alumniOf: {
     "@type": "CollegeOrUniversity",
     name: "The LNM Institute of Information Technology (LNMIIT), Jaipur",

@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import {
   ArrowUpRight,
-  Boxes,
   Check,
   Code2,
   Copy,
-  FileText,
+  Download,
   Github,
   Linkedin,
   Mail,
@@ -15,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { site } from "@/lib/site";
+import { useCopyEmail } from "@/hooks/use-copy-email";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/shared/reveal";
 import { StatusDot } from "@/components/shared/status-dot";
@@ -49,41 +48,25 @@ const methods = [
     external: true,
   },
   {
-    label: "Codolio",
-    handle: "All coding stats",
-    href: site.profiles.codolio,
-    icon: Boxes,
-    external: true,
-  },
-  {
     label: "Résumé",
-    handle: "View / print",
-    href: site.resumeHref,
-    icon: FileText,
-    external: true,
+    handle: "PDF · 1 page",
+    href: site.resumePdf,
+    icon: Download,
+    external: false,
+    download: true,
   },
 ];
 
 export function Contact() {
-  const [copied, setCopied] = useState(false);
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(site.email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      window.location.href = site.socials.email;
-    }
-  };
+  const { copied, copy: copyEmail } = useCopyEmail();
 
   return (
     <Section
       id="contact"
-      index="07"
+      index="05"
       kicker="Contact"
-      title="Let's talk systems."
-      description="Open to backend and distributed-systems roles, and to a good conversation about the hard parts. The fastest way to reach me is email."
+      title="Let's talk."
+      description={`${site.availability} · ${site.location} · ${site.relocation}. Email is the fastest way to reach me.`}
     >
       <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
         {/* Email panel */}
@@ -143,11 +126,12 @@ export function Contact() {
 
         {/* Method cards */}
         <Reveal delay={0.1} className="grid gap-3 sm:grid-cols-2">
-          {methods.map(({ label, handle, href, icon: Icon, external }) => (
+          {methods.map(({ label, handle, href, icon: Icon, external, download }) => (
             <a
               key={label}
               href={href}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              {...(download ? { download: true } : {})}
               className="group surface surface-hover flex items-center gap-4 p-4"
             >
               <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-secondary/50 text-muted-foreground transition-colors group-hover:border-accent/40 group-hover:text-accent">

@@ -109,13 +109,12 @@ export function CommandMenuProvider({ children }: { children: React.ReactNode })
                 value={`${item.label} ${item.id}`}
                 onSelect={() => scrollTo(item.id)}
               >
-                <span className="font-mono text-2xs text-accent">{item.index}</span>
                 <span>{item.label}</span>
               </CommandItem>
             ))}
             <CommandItem value="writing blog notes articles" onSelect={() => goRoute("/writing")}>
               <PenLine />
-              <span>Writing</span>
+              <span>All writing</span>
             </CommandItem>
           </CommandGroup>
 

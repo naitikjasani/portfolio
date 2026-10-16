@@ -34,7 +34,7 @@ Update these before deploying:
 - `socials.github`, `socials.linkedin` — your profiles
 - `email` — your contact address
 
-All page content (experience, projects, stack, timeline, philosophy) lives in
+All page content (experience, projects, skills, education) lives in
 [`src/lib/data.ts`](src/lib/data.ts).
 
 ## Structure

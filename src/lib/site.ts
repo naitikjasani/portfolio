@@ -17,6 +17,9 @@ export const site = {
   phone: "+91 88520 02717",
   phoneHref: "tel:+918852002717",
   location: "India",
+  relocation: "Open to relocation",
+  // Hiring signal shown in the hero, contact section and mobile CTA.
+  availability: "Open to backend SDE roles",
   // Handles — the single source of truth. Display strings are derived from these.
   handles: {
     github: "naitikjasani",
@@ -38,6 +41,7 @@ export const site = {
     codolio: "https://codolio.com/profile/flicktoss",
   },
   resumeHref: "/resume",
+  resumePdf: "/Naitik_Jasani_Resume.pdf",
   keywords: [
     "Naitik Jasani",
     "Backend Engineer",

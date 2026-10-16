@@ -79,7 +79,7 @@ export default function OpengraphImage() {
                 textTransform: "uppercase",
               }}
             >
-              {`${site.role} · ${site.company}`}
+              {`${site.availability} · ${site.location}`}
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function OpengraphImage() {
               display: "flex",
             }}
           >
-            Backend systems that stay fast, correct, and calm under load.
+            Backend engineer building order, returns and wallet workflows at OZi.
           </div>
         </div>
 

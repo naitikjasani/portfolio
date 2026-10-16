@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Command, Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { navItems } from "@/lib/data";
 import { site } from "@/lib/site";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
-import { useCommandMenu } from "@/components/layout/command-menu";
 import { StatusDot } from "@/components/shared/status-dot";
 import { Button } from "@/components/ui/button";
 
@@ -19,7 +17,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeId = useScrollSpy(sectionIds, 96);
-  const { open: openCommand } = useCommandMenu();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -93,26 +90,13 @@ export function Navbar() {
                 </button>
               );
             })}
-            <Link
-              href="/writing"
-              className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Writing
-            </Link>
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <button
-              onClick={openCommand}
-              className="hidden items-center gap-2 rounded-lg border border-border bg-card/60 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground sm:flex"
-              aria-label="Open command menu"
-            >
-              <Command className="size-3.5" />
-              <span className="font-mono text-2xs tracking-wide">K</span>
-            </button>
             <Button asChild size="sm" variant="accent" className="hidden sm:inline-flex">
-              <a href={site.resumeHref} target="_blank" rel="noopener noreferrer">
+              <a href={site.resumePdf} download>
+                <Download />
                 Résumé
               </a>
             </Button>
@@ -152,20 +136,12 @@ export function Navbar() {
                   )}
                 >
                   <span>{item.label}</span>
-                  <span className="font-mono text-2xs text-accent">{item.index}</span>
                 </button>
               ))}
-              <Link
-                href="/writing"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-between rounded-lg px-3 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-secondary/40 hover:text-foreground"
-              >
-                <span>Writing</span>
-                <span className="font-mono text-2xs text-accent">→</span>
-              </Link>
               <Button asChild variant="accent" className="mt-2">
-                <a href={site.resumeHref} target="_blank" rel="noopener noreferrer">
-                  Résumé
+                <a href={site.resumePdf} download>
+                  <Download />
+                  Download résumé
                 </a>
               </Button>
             </div>

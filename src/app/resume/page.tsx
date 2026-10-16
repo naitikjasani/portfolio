@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   Boxes,
   Code2,
+  Download,
   Github,
   Globe,
   Linkedin,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 
 import { site } from "@/lib/site";
-import { about, experiences, leadership, projects, techGroups, timeline } from "@/lib/data";
+import { about, education, experiences, leadership, projects, techGroups } from "@/lib/data";
 import { PrintButton } from "@/components/resume/print-button";
 
 export const metadata: Metadata = {
@@ -22,8 +23,6 @@ export const metadata: Metadata = {
   description: `Résumé of ${site.name} — ${site.role}.`,
   robots: { index: false, follow: true },
 };
-
-const education = timeline.find((t) => t.kind === "education");
 
 export default function ResumePage() {
   return (
@@ -37,7 +36,17 @@ export default function ResumePage() {
           <ArrowLeft className="size-4" />
           Back to site
         </Link>
-        <PrintButton />
+        <div className="flex items-center gap-2">
+          <a
+            href={site.resumePdf}
+            download
+            className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+          >
+            <Download className="size-4" />
+            Download PDF
+          </a>
+          <PrintButton />
+        </div>
       </div>
 
       {/* Paper sheet */}
@@ -186,19 +195,17 @@ export default function ResumePage() {
         </ResumeSection>
 
         {/* Education */}
-        {education ? (
-          <ResumeSection title="Education">
-            <div className="flex items-baseline justify-between gap-4">
-              <h3 className="text-sm font-semibold text-neutral-900">
-                {education.title} · {education.org}
-              </h3>
-              <span className="shrink-0 text-xs font-medium text-neutral-500">
-                {education.period}
-              </span>
-            </div>
-            <p className="mt-1 text-sm text-neutral-700">{education.description}</p>
-          </ResumeSection>
-        ) : null}
+        <ResumeSection title="Education">
+          <div className="flex items-baseline justify-between gap-4">
+            <h3 className="text-sm font-semibold text-neutral-900">
+              {education.degree} · {education.school}
+            </h3>
+            <span className="shrink-0 text-xs font-medium text-neutral-500">
+              {education.period}
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-neutral-700">{education.grade}</p>
+        </ResumeSection>
 
         {/* Leadership */}
         <ResumeSection title="Leadership & Activities">

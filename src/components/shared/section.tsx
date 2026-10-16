@@ -32,7 +32,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-heading`}
-      className={cn("relative scroll-mt-20 py-16 sm:py-24", className)}
+      className={cn("relative scroll-mt-20 py-12 sm:py-20", className)}
     >
       <div className={cn("container", containerClassName)}>
         <Reveal className="mb-8 sm:mb-12">

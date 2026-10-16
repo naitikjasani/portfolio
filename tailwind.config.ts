@@ -67,7 +67,7 @@ const config: Config = {
         display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        "2xs": ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.02em" }],
+        "2xs": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.02em" }],
       },
       letterSpacing: {
         tightest: "-0.04em",
