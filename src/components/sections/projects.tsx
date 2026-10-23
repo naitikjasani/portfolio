@@ -1,25 +1,75 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Lock } from "lucide-react";
 
-import { projects, type Project } from "@/lib/data";
+import { projects, type Project, type ProjectKind } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import { Section } from "@/components/shared/section";
 import { Reveal } from "@/components/shared/reveal";
 import { StackLine } from "@/components/shared/tech-pill";
 import { OfflineSyncDemo } from "@/components/visuals/offline-sync-demo";
 
+const filters: ("All" | ProjectKind)[] = ["All", "Full-stack", "Backend", "Frontend"];
+
 export function Projects() {
   const [featured, ...rest] = projects;
+  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
+  const shown = rest.filter((p) => filter === "All" || p.kind === filter);
 
   return (
     <Section id="projects" title="Projects">
       <div className="space-y-5">
         <FeaturedProject project={featured} />
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {rest.map((project) => (
-            <Reveal key={project.slug}>
-              <CompactProject project={project} />
-            </Reveal>
-          ))}
+
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
+          <h3 className="text-lg font-semibold text-foreground">More projects</h3>
+          <div
+            role="group"
+            aria-label="Filter projects"
+            className="inline-flex rounded-lg border border-white/[0.08] bg-white/[0.03] p-1"
+          >
+            {filters.map((f) => {
+              const count = f === "All" ? rest.length : rest.filter((p) => p.kind === f).length;
+              const on = filter === f;
+              return (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => setFilter(f)}
+                  className={cn(
+                    "whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 sm:px-3",
+                    on ? "bg-gradient-accent text-white" : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {f}
+                  <span className={cn("ml-1.5 text-xs", on ? "text-white/80" : "text-muted-foreground/70")}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
+
+        <motion.div layout className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {shown.map((project) => (
+              <motion.div
+                key={project.slug}
+                layout
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                <CompactProject project={project} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </Section>
   );
