@@ -283,6 +283,9 @@ pre code.sugar-high {
   .no-print {
     display: none !important;
   }
+  :root {
+    color-scheme: light !important;
+  }
   html,
   body {
     background: #ffffff !important;

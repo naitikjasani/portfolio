@@ -24,6 +24,20 @@ pnpm dev      # http://localhost:3000
 | `pnpm start`     | Serve the production build           |
 | `pnpm lint`      | Lint with ESLint (next config)       |
 | `pnpm typecheck` | Type-check with `tsc --noEmit`       |
+| `pnpm resume:pdf` | Print `/resume` to `public/Naitik_Jasani_Resume.pdf` |
+
+## Résumé PDF
+
+The downloadable résumé is generated from the `/resume` page, so it always matches the site.
+After changing content in `src/lib/data.ts`:
+
+```bash
+pnpm build && pnpm start                                   # terminal 1
+RESUME_URL=http://localhost:3000/resume pnpm resume:pdf    # terminal 2
+```
+
+It must stay one A4 page — check with `pdfinfo public/Naitik_Jasani_Resume.pdf`.
+Set `CHROME_PATH` if Chrome isn't in a standard location.
 
 ## Configure
 

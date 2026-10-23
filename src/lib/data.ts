@@ -65,7 +65,7 @@ export const snapshot: SnapshotItem[] = [
 
 export const about = {
   summary:
-    "Backend-focused Software Engineer building production order, returns and observability services in Node.js/TypeScript, with prior Java Spring Boot microservices experience in healthcare.",
+    "Software Engineer with a backend core: production order, returns and observability services in Node.js/TypeScript at OZi, and Java Spring Boot microservices in healthcare before that. Also ships full-stack products with React/Next.js, PostgreSQL and CI/CD.",
 };
 
 /* ------------------------------------------------------------------ */
@@ -119,11 +119,6 @@ export const experiences: Experience[] = [
         detail:
           "Designed return and exchange pickup capacity end to end — MySQL schema, IST-aware engine, CX overrides and admin UI — verified with 180+ tests.",
         primary: true,
-      },
-      {
-        label: "Production order APIs",
-        detail:
-          "Built multiple production REST APIs for the Node.js/TypeScript order service: order placement, live tracking, returns and admin operations.",
       },
       {
         label: "Failed-return recovery",
@@ -180,35 +175,34 @@ export const experiences: Experience[] = [
 /* Projects                                                            */
 /* ------------------------------------------------------------------ */
 
-export type ProjectKind = "Full-stack" | "Backend" | "Frontend";
-
 export type Project = {
   slug: string;
   name: string;
-  /** Drives the project filter. */
-  kind: ProjectKind;
   category: string;
   year: string;
+  /** Honest framing a reviewer asks for first — "Solo", "Take-home assignment". */
+  context?: string;
   tagline: string;
   description: string;
   highlights: string[];
   stack: string[];
-  /** Headline numbers shown as chips on the case study. */
+  /** Headline numbers shown on the case study. */
   stats?: { value: string; label: string }[];
   /** Omitted for private repositories. */
   repo?: string;
-  demo?: string;
-  /** Shown beside the demo link when it needs context (e.g. sign-in wall). */
-  demoNote?: string;
+  /** Longer design write-up, linked beside the source. */
+  docs?: string;
+  /** Printed on /resume (and so in the PDF). */
+  resume?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "ekayu",
     name: "Ekayu",
-    kind: "Full-stack",
     category: "Full-stack · Data",
     year: "Aug 2026 – Present",
+    context: "Solo",
     tagline: "A private health & life record that works offline and never loses a write.",
     description:
       "A personal health and life-record app, built solo as a 7-package TypeScript monorepo on PostgreSQL and Supabase — 115 pages and 103 tables behind strict CI checks.",
@@ -225,15 +219,16 @@ export const projects: Project[] = [
       { value: "0", label: "RLS policies" },
     ],
     stack: ["TypeScript", "Next.js", "React", "PostgreSQL", "Supabase", "Drizzle", "Turborepo", "Vitest"],
-    demo: "https://ekayu.vercel.app/",
-    demoNote: "sign-in required",
+    repo: "https://github.com/naitikjasani/NaitikOS",
+    docs: "https://github.com/naitikjasani/NaitikOS/blob/main/docs/BLUEPRINT.md",
+    resume: true,
   },
   {
     slug: "live-polling",
     name: "Live Polling System",
-    kind: "Full-stack",
     category: "Full-stack · Real-time",
     year: "Feb 2026",
+    context: "Take-home assignment",
     tagline: "Teachers ask, students answer, results update live.",
     description:
       "A real-time classroom polling app: teachers create timed polls, students vote from their own devices, and results, chat and the participant list update instantly over WebSockets.",
@@ -243,27 +238,11 @@ export const projects: Project[] = [
     ],
     stack: ["React", "TypeScript", "Socket.io", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
     repo: "https://github.com/naitikjasani/Live-Polling-System-Intervue",
-  },
-  {
-    slug: "order-management-system",
-    name: "Order Management System",
-    kind: "Full-stack",
-    category: "Full-stack · E-commerce",
-    year: "Nov 2025 – Feb 2026",
-    tagline: "Catalogue, cart and order lifecycle, with an admin side.",
-    description:
-      "An e-commerce order platform with a Spring Boot API and a React storefront: product catalogue, cart, checkout with stock checks, order tracking and admin order management.",
-    highlights: [
-      "JWT auth with role-based access for customers and admins",
-      "Redis caching over PostgreSQL, the whole stack started with Docker Compose",
-    ],
-    stack: ["Java", "Spring Boot", "React", "PostgreSQL", "Redis", "JWT", "Docker"],
-    repo: "https://github.com/naitikjasani/order-management-system",
+    resume: true,
   },
   {
     slug: "github-access-report",
     name: "GitHub Access Report",
-    kind: "Backend",
     category: "Backend · API",
     year: "Mar 2026",
     tagline: "Who can access which repository, across a whole GitHub org.",
@@ -277,27 +256,11 @@ export const projects: Project[] = [
     repo: "https://github.com/naitikjasani/github-access-report-service",
   },
   {
-    slug: "mailgenie",
-    name: "MailGenie",
-    kind: "Full-stack",
-    category: "Full-stack · AI",
-    year: "Jun 2025",
-    tagline: "One-click AI replies, right inside Gmail.",
-    description:
-      "A Chrome extension that adds an AI Reply button to Gmail's compose window, backed by a Spring Boot API that drafts context-aware replies with Gemini in the tone you pick.",
-    highlights: [
-      "Manifest V3 extension that reads the open email and injects the drafted reply",
-      "Professional, friendly or casual tone, remembered with the Chrome Storage API",
-    ],
-    stack: ["JavaScript", "Chrome Extension", "Java", "Spring Boot", "Gemini API", "React"],
-    repo: "https://github.com/naitikjasani/email-reply-generator",
-  },
-  {
     slug: "portfolio",
     name: "This portfolio",
-    kind: "Frontend",
     category: "Frontend",
     year: "2026",
+    context: "Solo",
     tagline: "The site you're reading — designed and built from scratch.",
     description:
       "A statically rendered Next.js site with two hand-built interactive pieces: Stack Match, which scans a pasted job description client-side, and the Ekayu write-path simulator above.",
@@ -311,7 +274,6 @@ export const projects: Project[] = [
   {
     slug: "proximity-ad-delivery",
     name: "Proximity Ad Delivery",
-    kind: "Backend",
     category: "IoT · Backend",
     year: "Oct 2024 – Feb 2025",
     tagline: "Serving the right ad to the right device, by proximity.",
@@ -323,6 +285,7 @@ export const projects: Project[] = [
     ],
     stack: ["Node.js", "Express.js", "Python", "Raspberry Pi", "BLE", "Gemini API", "MongoDB"],
     repo: "https://github.com/naitikjasani/CTIOT-Smart-Advertising",
+    resume: true,
   },
 ];
 
@@ -364,11 +327,6 @@ export const techGroups: TechGroup[] = [
       { name: "Tailwind CSS", note: "Design systems and responsive layouts", aliases: ["tailwind", "tailwindcss"] },
       { name: "HTML & CSS", note: "Semantic, accessible markup", aliases: ["html", "css", "html5", "css3"] },
       { name: "Framer Motion", note: "Interaction and motion on this site", aliases: ["framer", "animations"] },
-      {
-        name: "Chrome Extensions",
-        note: "MailGenie, a Manifest V3 Gmail extension",
-        aliases: ["chrome extension", "browser extension", "browser extensions"],
-      },
     ],
   },
   {
@@ -380,7 +338,7 @@ export const techGroups: TechGroup[] = [
       { name: "NestJS", note: "Structured, modular Node services", aliases: ["nest"] },
       {
         name: "Spring Boot",
-        note: "Healthcare microservices, Order Management, GitHub Access Report",
+        note: "Healthcare microservices and the GitHub Access Report service",
         aliases: ["spring", "springboot", "spring webflux", "webflux"],
       },
       {
@@ -392,11 +350,6 @@ export const techGroups: TechGroup[] = [
         name: "WebSockets",
         note: "Live results and chat in Live Polling",
         aliases: ["socket.io", "socketio", "websocket", "real-time", "realtime"],
-      },
-      {
-        name: "JWT & RBAC",
-        note: "Role-based auth in Order Management",
-        aliases: ["jwt", "rbac", "spring security", "authentication"],
       },
       { name: "gRPC", note: "Typed service-to-service calls", aliases: ["grpc", "protobuf"] },
       { name: "Microservices", note: "Clear service boundaries", aliases: ["microservice"] },

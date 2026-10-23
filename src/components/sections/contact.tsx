@@ -43,6 +43,10 @@ export function Contact() {
               {site.availability} — {site.roles.join(", ")}. Based in {site.location},{" "}
               {site.relocation.toLowerCase()}. Email is the fastest way to reach me.
             </p>
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-3 py-1 text-sm font-medium text-success">
+              <Check className="size-4" />
+              {site.joining}
+            </p>
             <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-3">
               <a
                 href={site.socials.email}

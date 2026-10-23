@@ -27,6 +27,14 @@ import { NetworkCanvas } from "@/components/backgrounds/network-canvas";
 
 const roleIcons = { "Full-stack": Layers, Backend: Server, Frontend: Monitor, DevOps: Cloud } as const;
 
+/** Each role claim points at the evidence for it. */
+const roleEvidence = {
+  "Full-stack": "#project-ekayu",
+  Backend: "#experience",
+  Frontend: "#project-portfolio",
+  DevOps: "#skills",
+} as const;
+
 const snapshotIcons: Record<SnapshotItem["tag"], typeof Briefcase> = {
   Now: Briefcase,
   Before: History,
@@ -61,7 +69,7 @@ export function Hero() {
               {site.availability}
             </span>
             <span className="text-sm text-muted-foreground">
-              {site.location} · {site.relocation.toLowerCase()}
+              {site.joining} · {site.location}, {site.relocation.toLowerCase()}
             </span>
           </div>
 
@@ -71,20 +79,23 @@ export function Hero() {
             <span className="text-gradient">end to end.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-            Software engineer at {site.company}. I work across the stack — Node.js and Java
-            services, React and Next.js front ends, and the AWS, Docker and CI/CD that ship them.
+            Backend Developer at {site.company}, building the order, returns and wallet services
+            behind a quick-commerce app. Outside work I ship full-stack: Next.js front ends,
+            Postgres, and the CI/CD around them.
           </p>
 
-          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Roles I'm open to">
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Roles I'm open to, with evidence">
             {site.roles.map((role) => {
               const Icon = roleIcons[role];
               return (
-                <li
-                  key={role}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-sm text-foreground/90"
-                >
-                  <Icon className="size-4 text-accent" />
-                  {role}
+                <li key={role}>
+                  <a
+                    href={roleEvidence[role]}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-sm text-foreground/90 transition-colors hover:border-accent/40 hover:bg-accent/10 hover:text-foreground"
+                  >
+                    <Icon className="size-4 text-accent" />
+                    {role}
+                  </a>
                 </li>
               );
             })}

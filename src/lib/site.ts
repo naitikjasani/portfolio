@@ -20,6 +20,7 @@ export const site = {
   relocation: "Open to relocation",
   // Hiring signal shown in the hero, contact section and mobile CTA.
   availability: "Open to software engineering roles",
+  joining: "Available to join immediately",
   // Role families to show alongside availability.
   roles: ["Full-stack", "Backend", "Frontend", "DevOps"],
   // Handles — the single source of truth. Display strings are derived from these.

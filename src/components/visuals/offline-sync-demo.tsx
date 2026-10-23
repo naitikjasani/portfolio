@@ -13,6 +13,16 @@ type Row = Write & { duplicate: boolean };
 const SEND_MS = 650;
 const keyFor = (n: number) => `idem-${((n * 2654435761) >>> 0).toString(16).slice(0, 6)}`;
 
+/** Opens mid-story: two workouts already logged with no signal, waiting to sync. */
+const SEEDED = 2;
+const seedQueue = (): Write[] =>
+  Array.from({ length: SEEDED }, (_, i) => ({
+    id: i + 1,
+    key: keyFor(i + 1),
+    label: `Workout #${i + 1}`,
+    clock: i + 1,
+  }));
+
 /**
  * A hands-on model of Ekayu's write path: writes queue on the device while
  * offline, drain in logical-clock order on reconnect, and the server dedupes
@@ -21,13 +31,13 @@ const keyFor = (n: number) => `idem-${((n * 2654435761) >>> 0).toString(16).slic
 export function OfflineSyncDemo() {
   const reduced = usePrefersReducedMotion();
   const [online, setOnline] = useState(false);
-  const [queue, setQueue] = useState<Write[]>([]);
+  const [queue, setQueue] = useState<Write[]>(seedQueue);
   const [rows, setRows] = useState<Row[]>([]);
   const [sending, setSending] = useState<Write | null>(null);
   const [lastSent, setLastSent] = useState<Write | null>(null);
-  const seq = useRef(0);
-  const clock = useRef(0);
-  const workouts = useRef(0);
+  const seq = useRef(SEEDED);
+  const clock = useRef(SEEDED);
+  const workouts = useRef(SEEDED);
 
   // Pick up the next write while online — the queue is already in logical-clock order.
   useEffect(() => {
@@ -64,12 +74,14 @@ export function OfflineSyncDemo() {
   };
 
   const reset = () => {
-    setQueue([]);
+    setOnline(false);
+    setQueue(seedQueue());
     setRows([]);
     setSending(null);
     setLastSent(null);
-    workouts.current = 0;
-    clock.current = 0;
+    seq.current = SEEDED;
+    workouts.current = SEEDED;
+    clock.current = SEEDED;
   };
 
   const stored = rows.filter((r) => !r.duplicate).length;
@@ -186,7 +198,7 @@ export function OfflineSyncDemo() {
             <>Now retry the last request.</>
           ) : null}
         </p>
-        {rows.length || queue.length ? (
+        {rows.length || queue.length !== SEEDED ? (
           <button
             type="button"
             onClick={reset}
