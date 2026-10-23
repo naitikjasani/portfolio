@@ -1,9 +1,24 @@
 "use client";
 
-import { Check, Cloud, Copy, Download, Github, Layers, Linkedin, Monitor, Server } from "lucide-react";
+import {
+  ArrowUpRight,
+  Briefcase,
+  Check,
+  Cloud,
+  Copy,
+  Download,
+  Github,
+  GraduationCap,
+  Hammer,
+  History,
+  Layers,
+  Linkedin,
+  Monitor,
+  Server,
+} from "lucide-react";
 
 import { site } from "@/lib/site";
-import { telemetry } from "@/lib/data";
+import { snapshot, type SnapshotItem } from "@/lib/data";
 import { useCopyEmail } from "@/hooks/use-copy-email";
 import { Button } from "@/components/ui/button";
 import { StatusDot } from "@/components/shared/status-dot";
@@ -11,6 +26,13 @@ import { GridBackground } from "@/components/backgrounds/grid-background";
 import { NetworkCanvas } from "@/components/backgrounds/network-canvas";
 
 const roleIcons = { "Full-stack": Layers, Backend: Server, Frontend: Monitor, DevOps: Cloud } as const;
+
+const snapshotIcons: Record<SnapshotItem["tag"], typeof Briefcase> = {
+  Now: Briefcase,
+  Before: History,
+  Building: Hammer,
+  Education: GraduationCap,
+};
 
 /**
  * First viewport = the whole pitch: who, what, availability, proof, and
@@ -88,15 +110,39 @@ export function Hero() {
           </div>
         </div>
 
-        <dl className="glass mt-14 grid max-w-4xl grid-cols-2 gap-px overflow-hidden sm:grid-cols-4">
-          {telemetry.map((t) => (
-            <div key={t.label} className="p-5">
-              <dt className="text-sm text-muted-foreground">{t.label}</dt>
-              <dd className="metric text-gradient mt-1 text-3xl font-semibold">{t.value}</dd>
-              <dd className="mt-1 text-sm text-muted-foreground">{t.hint}</dd>
-            </div>
-          ))}
-        </dl>
+        <ul className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {snapshot.map((item) => {
+            const Icon = snapshotIcons[item.tag];
+            const now = item.tag === "Now";
+            return (
+              <li key={item.tag}>
+                <a
+                  href={item.href}
+                  className="glass group flex h-full flex-col p-4 transition-all sm:p-5 duration-300 hover:-translate-y-0.5 hover:border-accent/30"
+                >
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={
+                        now
+                          ? "inline-flex items-center gap-1.5 text-xs font-medium text-success"
+                          : "inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground"
+                      }
+                    >
+                      <Icon className="size-3.5" />
+                      {item.tag}
+                    </span>
+                    <ArrowUpRight className="size-4 text-muted-foreground/50 transition-colors group-hover:text-accent" />
+                  </div>
+                  <p className="mt-3 text-base font-semibold text-foreground">{item.title}</p>
+                  <p className="text-sm text-muted-foreground">{item.role}</p>
+                  <p className="mt-3 hidden border-t border-white/[0.06] pt-3 text-sm leading-snug text-foreground/85 sm:block">
+                    {item.highlight}
+                  </p>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

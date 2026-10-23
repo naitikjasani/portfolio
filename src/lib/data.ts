@@ -17,20 +17,47 @@ export const navItems: NavItem[] = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Hero proof strip                                                    */
+/* Hero snapshot — where I am, where I've been, what I'm building       */
 /* ------------------------------------------------------------------ */
 
-export type Telemetry = {
-  label: string;
-  value: string;
-  hint: string;
+export type SnapshotItem = {
+  tag: "Now" | "Before" | "Building" | "Education";
+  title: string;
+  role: string;
+  /** One concrete outcome — the line a recruiter remembers. */
+  highlight: string;
+  href: string;
 };
 
-export const telemetry: Telemetry[] = [
-  { label: "Daily transactions", value: "100K+", hint: "Healthcare portal, 99.9% uptime" },
-  { label: "Throughput gain", value: "3–4×", hint: "300+ req/s over legacy" },
-  { label: "Full-stack app, solo", value: "115 pages", hint: "Next.js + Postgres, 103 tables" },
-  { label: "DSA problems", value: "1000+", hint: "LeetCode & Codeforces" },
+export const snapshot: SnapshotItem[] = [
+  {
+    tag: "Now",
+    title: "OZi",
+    role: "Backend Developer",
+    highlight: "Order, returns and wallet services for quick commerce",
+    href: "#experience",
+  },
+  {
+    tag: "Before",
+    title: "Bajaj Finserv Health",
+    role: "SWE Intern, Backend",
+    highlight: "3–4× throughput at 100K+ transactions a day",
+    href: "#experience",
+  },
+  {
+    tag: "Building",
+    title: "Ekayu",
+    role: "Full-stack, solo",
+    highlight: "Offline-first Next.js app on a 103-table Postgres",
+    href: "#projects",
+  },
+  {
+    tag: "Education",
+    title: "LNMIIT",
+    role: "B.Tech CSE, 2026",
+    highlight: "1000+ problems solved on LeetCode & Codeforces",
+    href: "#education",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
